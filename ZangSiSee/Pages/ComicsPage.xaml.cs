@@ -12,7 +12,7 @@ namespace ZangSiSee.Pages
         protected override void Initialize()
         {
             InitializeComponent();
-            Title = "Comics";
+            Title = "만화 리스트";
         }
     }
 

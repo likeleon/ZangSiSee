@@ -2,5 +2,9 @@
 <local:ComicsXaml xmlns="http://xamarin.com/schemas/2014/forms"
                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                   x:Class="ZangSiSee.Pages.ComicsPage"
-                  xmlns:local="clr-namespace:ZangSiSee.Pages;assembly=ZangSiSee">
+                  xmlns:local="clr-namespace:ZangSiSee.Pages"
+                  xmlns:views="clr-namespace:ZangSiSee.Views">
+  <local:ComicsXaml.Content>
+    <views:ComicListView ItemsSource="{Binding Comics}" />
+  </local:ComicsXaml.Content>
 </local:ComicsXaml>

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ListView xmlns="http://xamarin.com/schemas/2014/forms"
+          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+          x:Class="ZangSiSee.Views.ComicListView">
+  <ListView.ItemTemplate>
+    <DataTemplate>
+      <TextCell Text="{Binding Comic.Title}" />
+    </DataTemplate>
+  </ListView.ItemTemplate>
+</ListView>
