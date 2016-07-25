@@ -46,6 +46,7 @@
       <DependentUpon>ComicsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ZangSiSiService.cs" />
     <Compile Include="ViewModels\ComicsViewModel.cs" />
     <Compile Include="ViewModels\ComicViewModel.cs" />
     <Compile Include="Views\ComicListView.xaml.cs">

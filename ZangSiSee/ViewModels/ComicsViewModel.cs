@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
-using ZangSiSee.Models;
+using System.Threading.Tasks;
+using ZangSiSee.Services;
 
 namespace ZangSiSee.ViewModels
 {
@@ -7,10 +8,18 @@ namespace ZangSiSee.ViewModels
     {
         public ObservableCollection<ComicViewModel> Comics { get; } = new ObservableCollection<ComicViewModel>();
 
-        public ComicsViewModel()
+        public async Task RemoteRefresh()
         {
-            foreach (var title in new string[] { "은혼", "오늘부터 우리는" })
-                Comics.Add(new ComicViewModel() { Comic = new Comic(title) });
-        }
+            using (new Busy(this))
+            {
+                var task = ZangSiSiService.Instance.GetAllComics();
+                await RunSafe(task);
+
+                if (task.IsFaulted)
+                    return;
+
+                //LocalRefresh();
+            }
+        } 
     }
 }

@@ -14,6 +14,13 @@ namespace ZangSiSee.Pages
             InitializeComponent();
             Title = "만화 리스트";
         }
+
+        protected async override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            await ViewModel.RemoteRefresh().ConfigureAwait(false);
+        }
     }
 
     public partial class ComicsXaml : BaseContentPage<ComicsViewModel>
