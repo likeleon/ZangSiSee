@@ -18,8 +18,15 @@ namespace ZangSiSee.ViewModels
                 if (task.IsFaulted)
                     return;
 
-                //LocalRefresh();
+                LocalRefresh();
             }
-        } 
+        }
+
+        void LocalRefresh()
+        {
+            Comics.Clear();
+            foreach (var comic in DataManager.Instance.Comics.Values)
+                Comics.Add(new ComicViewModel() { Comic = comic });
+        }
     }
 }

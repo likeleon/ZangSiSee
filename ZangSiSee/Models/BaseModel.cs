@@ -1,7 +1,8 @@
 ﻿namespace ZangSiSee.Models
 {
-    public class BaseModel : BaseNotify, IDirty
+    public abstract class BaseModel : BaseNotify, IDirty
     {
         public bool IsDirty { get; set; }
+        public abstract string Id { get; }
     }
 }
