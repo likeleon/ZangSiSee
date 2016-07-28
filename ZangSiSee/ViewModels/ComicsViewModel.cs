@@ -12,12 +12,7 @@ namespace ZangSiSee.ViewModels
         {
             using (new Busy(this))
             {
-                var task = ZangSiSiService.Instance.GetAllComics();
-                await RunSafe(task);
-
-                if (task.IsFaulted)
-                    return;
-
+                await ZangSiSiService.Instance.GetAllComics();
                 LocalRefresh();
             }
         }

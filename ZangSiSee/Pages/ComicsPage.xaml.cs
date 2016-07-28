@@ -12,7 +12,7 @@ namespace ZangSiSee.Pages
         protected override void Initialize()
         {
             InitializeComponent();
-            Title = "만화 리스트";
+            Title = "만화 목록";
         }
 
         protected async override void OnAppearing()
