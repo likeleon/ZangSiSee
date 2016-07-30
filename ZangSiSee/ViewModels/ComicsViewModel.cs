@@ -14,7 +14,6 @@ namespace ZangSiSee.ViewModels
 
         public async Task RemoteRefresh()
         {
-            
             using (new Busy(this))
             {
                 await ZangSiSiService.Instance.GetAllComics();

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using Xamarin.Forms;
+using ZangSiSee.Interfaces;
 using ZangSiSee.Models;
 
 namespace ZangSiSee
@@ -30,6 +32,15 @@ namespace ZangSiSee
             }
             else
                 dict.TryAdd(model.Id, model);
+        }
+
+        public static void ToToast(this string message, ToastNotificationType type = ToastNotificationType.Info, string title = null)
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                var toaster = DependencyService.Get<IToastNotifier>();
+                toaster.Notify(type, title ?? type.ToString().ToUpper(), message, TimeSpan.FromSeconds(2.5f));
+            });
         }
     }
 }

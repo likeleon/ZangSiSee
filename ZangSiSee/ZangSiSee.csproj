@@ -40,6 +40,8 @@
     <Compile Include="BaseNotify.cs" />
     <Compile Include="BaseViewModel.cs" />
     <Compile Include="Exts.cs" />
+    <Compile Include="Interfaces\IToastNotifier.cs" />
+    <Compile Include="Messages.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Comic.cs" />
     <Compile Include="Pages\ComicsPage.xaml.cs">
