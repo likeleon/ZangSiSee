@@ -3,8 +3,11 @@
                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                   x:Class="ZangSiSee.Pages.ComicsPage"
                   xmlns:local="clr-namespace:ZangSiSee.Pages"
-                  xmlns:views="clr-namespace:ZangSiSee.Views">
+                  xmlns:views="clr-namespace:ZangSiSee.Views"
+                  Icon="Transparent">
   <local:ComicsXaml.Content>
-    <views:ComicListView ItemsSource="{Binding Comics}" />
+    <views:ComicListView ItemsSource="{Binding Comics}"
+                         IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                         RefreshCommand="{Binding GetComicsCommand}"/>
   </local:ComicsXaml.Content>
 </local:ComicsXaml>
