@@ -6,4 +6,4 @@
 - [x] UnhandledException handing
 - [ ] MainActivity
 - [ ] ActionBar
-- [ ] Material Theme
+- [x] Material Theme

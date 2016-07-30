@@ -10,7 +10,7 @@ using Xamarin.Forms.Platform.Android;
 namespace ZangSiSee.Droid
 {
     [Activity(Label = "ZangSiSee", Icon = "@drawable/icon", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait)]
-    public class MainActivity : FormsApplicationActivity
+    public class MainActivity : FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
         {
@@ -29,6 +29,9 @@ namespace ZangSiSee.Droid
 
             try
             {
+                ToolbarResource = Resource.Layout.toolbar;
+                TabLayoutResource = Resource.Layout.tabs;
+
                 base.OnCreate(bundle);
                 Window.SetSoftInputMode(SoftInput.AdjustPan);
 
