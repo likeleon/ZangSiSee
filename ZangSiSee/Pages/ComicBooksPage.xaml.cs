@@ -17,7 +17,7 @@ namespace ZangSiSee.Pages
             InitializeComponent();
             Title = ViewModel.Comic.Title;
 
-            await ViewModel.RemoteRefresh().ConfigureAwait(false);
+            await ViewModel.GetBooks().ConfigureAwait(false);
         }
     }
 

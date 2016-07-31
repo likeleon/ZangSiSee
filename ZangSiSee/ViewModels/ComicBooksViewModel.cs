@@ -15,16 +15,27 @@ namespace ZangSiSee.ViewModels
 
         public ICommand RefreshBooksCommand => new Command(async () => { await RemoteRefresh(); });
 
+        public async Task GetBooks()
+        {
+            LocalRefresh();
+            if (Books.Count <= 0)
+                await RemoteRefresh();
+        }
+
         public async Task RemoteRefresh()
         {
             using (new Busy(this))
             {
-                var books = await ZangSiSiService.Instance.GetBooks(Comic);
-
-                Books.Clear();
-                foreach (var book in books.OrderBy(b => b.Order))
-                    Books.Add(new BookViewModel() { Book = book });
+                await ZangSiSiService.Instance.GetBooks(Comic);
+                LocalRefresh();
             }
+        }
+
+        void LocalRefresh()
+        {
+            Books.Clear();
+            foreach (var book in DataManager.Instance.Books.Values.Where(b => b.Comic == Comic).OrderBy(b => b.Order))
+                Books.Add(new BookViewModel() { Book = book });
         }
     }
 }
