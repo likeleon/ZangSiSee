@@ -1,4 +1,5 @@
-﻿using ZangSiSee.ViewModels;
+﻿using Xamarin.Forms;
+using ZangSiSee.ViewModels;
 
 namespace ZangSiSee.Pages
 {
@@ -9,17 +10,37 @@ namespace ZangSiSee.Pages
             Initialize();
         }
 
-        protected override void Initialize()
+        protected async override void Initialize()
         {
             InitializeComponent();
             Title = "만화 목록";
+
+            await ViewModel.RemoteRefresh().ConfigureAwait(false);
         }
 
-        protected async override void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
 
-            await ViewModel.RemoteRefresh().ConfigureAwait(false);
+            list.ItemSelected += OnListItemSelected;
+        }
+
+        protected override void OnDisappearing()
+        {
+            list.ItemSelected -= OnListItemSelected;
+
+            base.OnDisappearing();
+        }
+
+        async void OnListItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (list.SelectedItem == null)
+                return;
+
+            var vm = list.SelectedItem as ComicViewModel;
+            list.SelectedItem = null;
+
+            await Navigation.PushAsync(new ComicBooksPage(vm.Comic));
         }
     }
 

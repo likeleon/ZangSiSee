@@ -3,8 +3,10 @@
           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
           x:Class="ZangSiSee.Views.ComicListView"
           IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+          RefreshCommand="{Binding RefreshBooksCommand}"
           IsPullToRefreshEnabled="True"
-          HasUnevenRows="True">
+          HasUnevenRows="True"
+          SeparatorColor="{StaticResource grayPrimary}">
   <ListView.ItemTemplate>
     <DataTemplate>
       <ViewCell>

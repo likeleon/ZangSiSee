@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:ComicBooksPageXaml xmlns="http://xamarin.com/schemas/2014/forms"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          x:Class="ZangSiSee.Pages.ComicBooksPage"
+                          xmlns:local="clr-namespace:ZangSiSee.Pages">
+  <ListView  x:Name="list"
+             ItemsSource="{Binding Books}"
+             IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+             RefreshCommand="{Binding RefreshBooksCommand}"
+             IsPullToRefreshEnabled="True"
+             HasUnevenRows="True"
+             SeparatorColor="{StaticResource grayPrimary}">
+    <ListView.ItemTemplate>
+      <DataTemplate>
+        <ViewCell>
+          <ViewCell.View>
+            <StackLayout Spacing="0" Padding="15">
+              <Label Text="{Binding Book.Title}" />
+            </StackLayout>
+          </ViewCell.View>
+        </ViewCell>
+      </DataTemplate>
+    </ListView.ItemTemplate>
+  </ListView>
+</local:ComicBooksPageXaml>

@@ -45,13 +45,19 @@
     <Compile Include="Interfaces\IToastNotifier.cs" />
     <Compile Include="Messages.cs" />
     <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Comic.cs" />
+    <Compile Include="Pages\ComicBooksPage.xaml.cs">
+      <DependentUpon>ComicBooksPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ComicsPage.xaml.cs">
       <DependentUpon>ComicsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DataManager.cs" />
     <Compile Include="Services\ZangSiSiService.cs" />
+    <Compile Include="ViewModels\BookViewModel.cs" />
+    <Compile Include="ViewModels\ComicBooksViewModel.cs" />
     <Compile Include="ViewModels\ComicsViewModel.cs" />
     <Compile Include="ViewModels\ComicViewModel.cs" />
     <Compile Include="Views\ComicListView.xaml.cs">
@@ -98,6 +104,12 @@
     <EmbeddedResource Include="App.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\ComicBooksPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

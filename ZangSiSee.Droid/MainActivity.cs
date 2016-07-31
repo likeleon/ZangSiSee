@@ -37,8 +37,6 @@ namespace ZangSiSee.Droid
 
                 Xamarin.Forms.Forms.Init(this, bundle);
                 LoadApplication(new App());
-
-                ActionBar.SetIcon(new ColorDrawable(Color.Transparent));
             }
             catch (Exception e)
             {

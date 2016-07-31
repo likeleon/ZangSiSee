@@ -2,42 +2,44 @@
 
 namespace ZangSiSee.Models
 {
-    public class Comic : BaseModel
+    public class Book : BaseModel
     {
+        public Comic Comic { get; }
         public string Title { get; }
+        public int Order { get; }
         public string Url { get; }
-        public bool Concluded { get; }
         public override string Id => Title;
 
-        public Comic(string title, string url, bool concluded)
+        public Book(Comic comic, string title, int order, string url)
         {
+            Comic = comic;
             Title = title;
+            Order = order;
             Url = url;
-            Concluded = concluded;
         }
 
         public override bool Equals(object obj)
         {
-            return new ComicComparer().Equals(this, obj as Comic);
+            return new BookComparer().Equals(this, obj as Book);
         }
 
         public override int GetHashCode()
         {
-            return new ComicComparer().GetHashCode(this);
+            return new BookComparer().GetHashCode(this);
         }
     }
 
-    public class ComicComparer : IEqualityComparer<Comic>
+    public class BookComparer : IEqualityComparer<Book>
     {
-        public bool Equals(Comic x, Comic y)
+        public bool Equals(Book x, Book y)
         {
             if (x == null || y == null)
                 return false;
 
-            return x.Id == y.Id && x.Title == y.Title;
+            return x.Comic == y.Comic && x.Id == y.Id;
         }
 
-        public int GetHashCode(Comic obj)
+        public int GetHashCode(Book obj)
         {
             return obj.Id != null ? obj.Id.GetHashCode() : base.GetHashCode();
         }

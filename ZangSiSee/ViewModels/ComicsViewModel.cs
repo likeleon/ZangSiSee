@@ -1,9 +1,9 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using ZangSiSee.Services;
-using System.Linq;
 
 namespace ZangSiSee.ViewModels
 {
@@ -11,22 +11,18 @@ namespace ZangSiSee.ViewModels
     {
         public ObservableCollection<ComicViewModel> Comics { get; } = new ObservableCollection<ComicViewModel>();
 
-        public ICommand GetComicsCommand => new Command(async () => { await RemoteRefresh(); });
+        public ICommand RefreshComicsCommand => new Command(async () => { await RemoteRefresh(); });
 
         public async Task RemoteRefresh()
         {
             using (new Busy(this))
             {
-                await ZangSiSiService.Instance.GetAllComics();
-                LocalRefresh();
-            }
-        }
+                var comics = await ZangSiSiService.Instance.GetAllComics();
 
-        void LocalRefresh()
-        {
-            Comics.Clear();
-            foreach (var comic in DataManager.Instance.Comics.Values.OrderBy(c => c.Title))
-                Comics.Add(new ComicViewModel() { Comic = comic });
+                Comics.Clear();
+                foreach (var comic in comics.OrderBy(c => c.Title))
+                    Comics.Add(new ComicViewModel() { Comic = comic });
+            }
         }
     }
 }
