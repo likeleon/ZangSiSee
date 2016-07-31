@@ -4,10 +4,16 @@
           x:Class="ZangSiSee.Views.ComicListView"
           IsRefreshing="{Binding IsBusy, Mode=OneWay}"
           IsPullToRefreshEnabled="True"
-          SeparatorVisibility="None">
+          HasUnevenRows="True">
   <ListView.ItemTemplate>
     <DataTemplate>
-      <TextCell Text="{Binding Comic.Title}" />
+      <ViewCell>
+        <ViewCell.View>
+          <StackLayout Spacing="0" Padding="15">
+            <Label Text="{Binding Comic.Title}" />
+          </StackLayout>
+        </ViewCell.View>
+      </ViewCell>
     </DataTemplate>
   </ListView.ItemTemplate>
 </ListView>

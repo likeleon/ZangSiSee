@@ -6,12 +6,13 @@ using ZangSiSee.Pages;
 
 namespace ZangSiSee
 {
-    public class App : Application
+    public partial class App : Application
     {
         public App()
         {
-            MainPage = new NavigationPage(new ComicsPage());
+            InitializeComponent();
             MessagingCenter.Subscribe<BaseViewModel, Exception>(this, "ExceptionOccured", OnAppExceptionOccured);
+            MainPage = new NavigationPage(new ComicsPage());
         }
 
         void OnAppExceptionOccured(BaseViewModel viewModel, Exception exception)

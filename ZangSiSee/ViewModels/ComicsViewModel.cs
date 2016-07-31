@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using ZangSiSee.Services;
+using System.Linq;
 
 namespace ZangSiSee.ViewModels
 {
@@ -24,7 +25,7 @@ namespace ZangSiSee.ViewModels
         void LocalRefresh()
         {
             Comics.Clear();
-            foreach (var comic in DataManager.Instance.Comics.Values)
+            foreach (var comic in DataManager.Instance.Comics.Values.OrderBy(c => c.Title))
                 Comics.Add(new ComicViewModel() { Comic = comic });
         }
     }
