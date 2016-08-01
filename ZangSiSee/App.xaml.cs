@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 using ZangSiSee.Interfaces;
 using ZangSiSee.Pages;
 
+[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace ZangSiSee
 {
     public partial class App : Application

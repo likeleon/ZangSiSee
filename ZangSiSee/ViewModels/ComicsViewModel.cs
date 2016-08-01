@@ -11,17 +11,38 @@ namespace ZangSiSee.ViewModels
     {
         public ObservableCollection<ComicViewModel> Comics { get; } = new ObservableCollection<ComicViewModel>();
 
+        public string SearchText
+        {
+            get { return _searchText; }
+            set
+            {
+                if (SetPropertyChanged(ref _searchText, value))
+                    LocalRefresh();
+            }
+        }
+
         public ICommand RefreshComicsCommand => new Command(async () => { await RemoteRefresh(); });
+
+        string _searchText;
 
         public async Task RemoteRefresh()
         {
             using (new Busy(this))
             {
-                var comics = await ZangSiSiService.Instance.GetAllComics();
+                await ZangSiSiService.Instance.GetAllComics();
+                LocalRefresh();
+            }
+        }
 
-                Comics.Clear();
-                foreach (var comic in comics.OrderBy(c => c.Title))
-                    Comics.Add(new ComicViewModel() { Comic = comic });
+        void LocalRefresh()
+        {
+            Comics.Clear();
+            foreach (var comic in DataManager.Instance.Comics.Values.OrderBy(c => c.Title))
+            {
+                if (!SearchText.IsNullOrEmpty() && !comic.Title.Contains(SearchText))
+                    continue;
+
+                Comics.Add(new ComicViewModel() { Comic = comic });
             }
         }
     }

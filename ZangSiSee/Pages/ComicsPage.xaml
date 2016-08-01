@@ -5,10 +5,11 @@
                   xmlns:local="clr-namespace:ZangSiSee.Pages"
                   xmlns:views="clr-namespace:ZangSiSee.Views"
                   Icon="Transparent">
-  <local:ComicsXaml.Content>
+  <StackLayout>
+    <SearchBar Text="{Binding SearchText, Mode=TwoWay}" />
     <views:ComicListView x:Name="list"
                          ItemsSource="{Binding Comics}"
                          IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                          RefreshCommand="{Binding RefreshComicsCommand}"/>
-  </local:ComicsXaml.Content>
+  </StackLayout>
 </local:ComicsXaml>

@@ -42,5 +42,10 @@ namespace ZangSiSee
                 toaster.Notify(type, title ?? type.ToString().ToUpper(), message, TimeSpan.FromSeconds(2.5f));
             });
         }
+
+        public static bool IsNullOrEmpty(this string str)
+        {
+            return string.IsNullOrEmpty(str);
+        }
     }
 }
