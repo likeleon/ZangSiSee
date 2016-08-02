@@ -9,7 +9,7 @@ using Xamarin.Forms.Platform.Android;
 
 namespace ZangSiSee.Droid
 {
-    [Activity(Label = "ZangSiSee", Icon = "@drawable/icon", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "장시시", Icon = "@drawable/icon", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
