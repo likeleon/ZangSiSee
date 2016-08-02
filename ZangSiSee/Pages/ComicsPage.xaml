@@ -6,7 +6,8 @@
                   xmlns:views="clr-namespace:ZangSiSee.Views"
                   Icon="Transparent">
   <StackLayout>
-    <SearchBar Text="{Binding SearchText, Mode=TwoWay}" />
+    <SearchBar Text="{Binding SearchText, Mode=TwoWay}" 
+               TextColor="{StaticResource asphaltPrimary}" />
     <views:ComicListView x:Name="list"
                          ItemsSource="{Binding Comics}"
                          IsRefreshing="{Binding IsBusy, Mode=OneWay}"
