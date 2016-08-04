@@ -14,6 +14,7 @@ namespace ZangSiSee.ViewModels
             get { return _imageUri; }
             private set { SetPropertyChanged(ref _imageUri, value); }
         }
+        public bool IsFullScreen => true;
 
         Uri _imageUri;
 
