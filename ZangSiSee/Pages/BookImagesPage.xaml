@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:BookImagesPageXaml xmlns="http://xamarin.com/schemas/2014/forms"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          x:Class="ZangSiSee.Pages.BookImagesPage"
+                          xmlns:local="clr-namespace:ZangSiSee.Pages">
+  <Image Source="{Binding ImageUri}" Aspect="AspectFit" />
+</local:BookImagesPageXaml>

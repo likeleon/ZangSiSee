@@ -47,6 +47,9 @@
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Comic.cs" />
+    <Compile Include="Pages\BookImagesPage.xaml.cs">
+      <DependentUpon>BookImagesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ComicBooksPage.xaml.cs">
       <DependentUpon>ComicBooksPage.xaml</DependentUpon>
     </Compile>
@@ -56,6 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DataManager.cs" />
     <Compile Include="Services\ZangSiSiService.cs" />
+    <Compile Include="ViewModels\BookImagesViewModel.cs" />
     <Compile Include="ViewModels\BookViewModel.cs" />
     <Compile Include="ViewModels\ComicBooksViewModel.cs" />
     <Compile Include="ViewModels\ComicsViewModel.cs" />
@@ -108,6 +112,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\ComicBooksPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\BookImagesPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

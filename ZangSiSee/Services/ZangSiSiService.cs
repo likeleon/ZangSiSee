@@ -56,5 +56,12 @@ namespace ZangSiSee.Services
             foreach (var a in element.QuerySelectorAll("a"))
                 yield return new Book(comic, a.TextContent, order++, a.GetAttribute("href"));
         }
+
+        public async Task<Uri[]> GetImages(Book book)
+        {
+            var document = await GetDocument(book.Url);
+            return document.QuerySelector("span.contents").QuerySelectorAll("img")
+                .Select(img => new Uri(img.GetAttribute("src"))).ToArray();
+        }
     }
 }
