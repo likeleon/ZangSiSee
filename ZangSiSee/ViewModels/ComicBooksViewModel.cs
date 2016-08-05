@@ -26,7 +26,7 @@ namespace ZangSiSee.ViewModels
         {
             using (new Busy(this))
             {
-                await ZangSiSiService.Instance.GetBooks(Comic);
+                await ExceptionSafe(ZangSiSiService.Instance.GetBooks(Comic));
                 LocalRefresh();
             }
         }

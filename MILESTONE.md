@@ -11,10 +11,11 @@
 - [ ] 좌/우 탭시 이전/다음 이미지 이동
 - [ ] 다음 이미지 미리 로딩
 - [ ] 하단 UI에 현재/마지막 페이지 보여줌
-- [ ] BaseViewModel.AwaitSafe?
+- [x] async 함수에서 발생한 예외 처리
 - [ ] Orientation
 - [ ] OnSleep/Awake
 - [ ] 첫 로딩시 메시지 보여주기
+- [ ] WithTimeout
 
 # Android
 - [x] UnhandledException handing

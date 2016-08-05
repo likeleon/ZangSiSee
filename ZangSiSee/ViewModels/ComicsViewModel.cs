@@ -29,7 +29,7 @@ namespace ZangSiSee.ViewModels
         {
             using (new Busy(this))
             {
-                await ZangSiSiService.Instance.GetAllComics();
+                await ExceptionSafe(ZangSiSiService.Instance.GetAllComics());
                 LocalRefresh();
             }
         }

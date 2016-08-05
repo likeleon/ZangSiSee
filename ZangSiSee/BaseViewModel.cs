@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -20,7 +19,7 @@ namespace ZangSiSee
         bool _isBusy;
         CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
-        public async Task RunSafe(Task task, bool notifyOnError = true, [CallerMemberName] string caller = "")
+        public async Task RunSafe(Task task, bool notifyOnError = true)
         {
             Exception exception = null;
             try
@@ -51,17 +50,40 @@ namespace ZangSiSee
             }
 
             if (exception != null)
-            {
-                Debug.WriteLine(exception);
+                HandleException(exception, notifyOnError);
+        }
 
-                if (notifyOnError)
-                    NotifyException(exception);
+        public async Task ExceptionSafe(Task task)
+        {
+            try
+            {
+                await task;
+            }
+            catch (Exception e)
+            {
+                HandleException(e);
             }
         }
 
-        void NotifyException(Exception exception)
+        public async Task<T> ExceptionSafe<T>(Task<T> task)
         {
-            MessagingCenter.Send(this, Messages.ExceptionOccured, exception);
+            try
+            {
+                return await task;
+            }
+            catch (Exception e)
+            {
+                HandleException(e);
+                return default(T);
+            }
+        }
+
+        public void HandleException(Exception exception, bool notify = true)
+        {
+            Debug.WriteLine(exception);
+
+            if (notify)
+                MessagingCenter.Send(this, Messages.ExceptionOccured, exception);
         }
 
         public virtual void CancelTasks()

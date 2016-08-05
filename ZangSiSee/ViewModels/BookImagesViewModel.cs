@@ -23,7 +23,7 @@ namespace ZangSiSee.ViewModels
             if (Book.Images == null)
             {
                 using (new Busy(this))
-                    Book.Images = await ZangSiSiService.Instance.GetImages(Book);
+                    Book.Images = await ExceptionSafe(ZangSiSiService.Instance.GetImages(Book));
             }
 
             ImageUri = Book.Images.FirstOrDefault();
