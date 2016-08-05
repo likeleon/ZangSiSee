@@ -12,6 +12,9 @@
 - [ ] 다음 이미지 미리 로딩
 - [ ] 하단 UI에 현재/마지막 페이지 보여줌
 - [ ] BaseViewModel.AwaitSafe?
+- [ ] Orientation
+- [ ] OnSleep/Awake
+- [ ] 첫 로딩시 메시지 보여주기
 
 # Android
 - [x] UnhandledException handing
