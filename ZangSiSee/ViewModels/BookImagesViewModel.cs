@@ -8,15 +8,31 @@ namespace ZangSiSee.ViewModels
 {
     public class BookImagesViewModel : BaseViewModel
     {
+        public event EventHandler<bool> IsFullScreenChanged;
+
         public Book Book { get; set; }
         public Uri ImageUri
         {
             get { return _imageUri; }
             private set { SetPropertyChanged(ref _imageUri, value); }
         }
-        public bool IsFullScreen => true;
+        public bool IsFullScreen
+        {
+            get { return _isFullScreen; }
+            private set
+            {
+                if (SetPropertyChanged(ref _isFullScreen, value))
+                    IsFullScreenChanged?.Invoke(this, value);
+            }
+        }
 
         Uri _imageUri;
+        bool _isFullScreen;
+
+        public BookImagesViewModel()
+        {
+            IsFullScreen = true;
+        }
 
         public async Task GetImages()
         {

@@ -5,7 +5,6 @@ using Xamarin.Forms;
 using ZangSiSee.Interfaces;
 
 [assembly: Dependency(typeof(ZangSiSee.Droid.Providers.ToastNotifier))]
-
 namespace ZangSiSee.Droid.Providers
 {
     public class ToastNotifier : IToastNotifier
