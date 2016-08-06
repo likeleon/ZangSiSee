@@ -24,36 +24,39 @@ namespace ZangSiSee.Pages
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            UpdateFullScreen();
 
+            EnterOrExitFullScreen(ViewModel.IsFullScreen);
             ViewModel.IsFullScreenChanged += OnIsFullScreenChanged;
         }
 
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            UpdateFullScreen();
 
             ViewModel.IsFullScreenChanged -= OnIsFullScreenChanged;
+            ExitFullScreen();
         }
 
-        void OnIsFullScreenChanged(object sender, bool e)
-        {
-            UpdateFullScreen();
-        }
+        void OnIsFullScreenChanged(object sender, bool e) => EnterOrExitFullScreen(e);
 
-        void UpdateFullScreen()
+        void EnterOrExitFullScreen(bool enter)
         {
-            if (ViewModel.IsFullScreen)
-            {
-                NavigationPage.SetHasNavigationBar(this, false);
-                DependencyService.Get<IStatusBar>().Hide();
-            }
+            if (enter)
+                EnterFullScreen();
             else
-            {
-                NavigationPage.SetHasNavigationBar(this, true);
-                DependencyService.Get<IStatusBar>().Show();
-            }
+                ExitFullScreen();
+        }
+
+        void EnterFullScreen()
+        {
+            NavigationPage.SetHasNavigationBar(this, false);
+            DependencyService.Get<IStatusBar>().Hide();
+        }
+
+        void ExitFullScreen()
+        {
+            NavigationPage.SetHasNavigationBar(this, true);
+            DependencyService.Get<IStatusBar>().Show();
         }
     }
 
