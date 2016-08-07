@@ -43,6 +43,7 @@
     <Compile Include="BaseViewModel.cs" />
     <Compile Include="Exts.cs" />
     <Compile Include="Interfaces\IStatusBar.cs" />
+    <Compile Include="Renderers\SwipeableImage.cs" />
     <Compile Include="Interfaces\IToastNotifier.cs" />
     <Compile Include="InverseBoolConverter.cs" />
     <Compile Include="Messages.cs" />
