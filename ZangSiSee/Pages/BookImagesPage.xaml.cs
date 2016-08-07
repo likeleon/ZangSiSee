@@ -27,8 +27,6 @@ namespace ZangSiSee.Pages
 
             EnterOrExitFullScreen(ViewModel.IsFullScreen);
             ViewModel.IsFullScreenChanged += OnIsFullScreenChanged;
-            image.SwipeLeft += (_, e) => "Swipe Left".ToToast();
-            image.SwipeRight += (_, e) => "Swipe Right".ToToast();
         }
 
         protected override void OnDisappearing()

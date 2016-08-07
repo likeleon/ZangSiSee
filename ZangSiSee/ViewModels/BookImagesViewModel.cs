@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 using ZangSiSee.Models;
 using ZangSiSee.Services;
 
@@ -25,6 +27,8 @@ namespace ZangSiSee.ViewModels
                     IsFullScreenChanged?.Invoke(this, value);
             }
         }
+
+        public ICommand SwipeRightCommand => new Command(_ => "Swipe Right".ToToast());
 
         Uri _imageUri;
         bool _isFullScreen;
