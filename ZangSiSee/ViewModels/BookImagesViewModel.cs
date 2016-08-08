@@ -51,15 +51,33 @@ namespace ZangSiSee.ViewModels
 
         public async Task GetImages()
         {
-            if (Book.ImageUris == null)
-            {
-                using (new Busy(this))
-                    Book.ImageUris = await ExceptionSafe(ZangSiSiService.Instance.GetImages(Book));
-            }
+            if (!await EnsureBookImageUrisGot())
+                return;
 
             ShowPage(PageNumber, true);
 
             await RunSafe(LoadImages()).ConfigureAwait(false);
+        }
+
+        async Task<bool> EnsureBookImageUrisGot()
+        {
+            if (Book.ImageUris != null)
+                return true;
+
+            using (new Busy(this))
+            {
+                try
+                {
+                    Book.ImageUris = await ZangSiSiService.Instance.GetImages(Book);
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    e.Message.ToToast(Interfaces.ToastNotificationType.Warning, "이미지 리스트 획득 실패");
+                    HandleException(e);
+                    return false;
+                }
+            }
         }
 
         void ShowPage(int pageNumber, bool force = false)

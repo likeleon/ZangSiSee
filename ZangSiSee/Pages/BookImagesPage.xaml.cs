@@ -50,13 +50,13 @@ namespace ZangSiSee.Pages
         void EnterFullScreen()
         {
             NavigationPage.SetHasNavigationBar(this, false);
-            DependencyService.Get<IStatusBar>().Hide();
+            //DependencyService.Get<IStatusBar>().Hide();
         }
 
         void ExitFullScreen()
         {
             NavigationPage.SetHasNavigationBar(this, true);
-            DependencyService.Get<IStatusBar>().Show();
+            //DependencyService.Get<IStatusBar>().Show();
         }
     }
 

@@ -3,8 +3,9 @@
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                           x:Class="ZangSiSee.Pages.BookImagesPage"
                           xmlns:pages="clr-namespace:ZangSiSee.Pages"
-                          xmlns:renderers="clr-namespace:ZangSiSee.Renderers">
-  <renderers:SwipeableImage Source="{Binding Image}" Aspect="AspectFit" 
+                          xmlns:renderers="clr-namespace:ZangSiSee.Renderers"
+                          BackgroundColor="Black">
+  <renderers:SwipeableImage Source="{Binding Image}" Aspect="AspectFit"
                             SwipeLeftCommand="{Binding NextImageCommand}"
                             SwipeRightCommand="{Binding PrevImageCommand}"/>
 </pages:BookImagesPageXaml>
