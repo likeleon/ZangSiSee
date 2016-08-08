@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using Xamarin.Forms;
 using ZangSiSee.Interfaces;
 using ZangSiSee.Models;
@@ -47,5 +48,22 @@ namespace ZangSiSee
         {
             return string.IsNullOrEmpty(str);
         }
+
+        public static string F(string format, params object[] args)
+        {
+            return string.Format(format, args);
+        }
+
+        public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T>
+        {
+            if (val.CompareTo(min) < 0)
+                return min;
+            else if (val.CompareTo(max) > 0)
+                return max;
+            else
+                return val;
+        }
+
+        public static bool IsNullOrEmpty<T>(this IEnumerable<T> e) => e == null || !e.Any();
     }
 }

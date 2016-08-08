@@ -4,6 +4,7 @@
                           x:Class="ZangSiSee.Pages.BookImagesPage"
                           xmlns:pages="clr-namespace:ZangSiSee.Pages"
                           xmlns:renderers="clr-namespace:ZangSiSee.Renderers">
-  <renderers:SwipeableImage Source="{Binding ImageUri}" Aspect="AspectFit" 
-                            SwipeRightCommand="{Binding SwipeRightCommand}"/>
+  <renderers:SwipeableImage Source="{Binding Image}" Aspect="AspectFit" 
+                            SwipeLeftCommand="{Binding NextImageCommand}"
+                            SwipeRightCommand="{Binding PrevImageCommand}"/>
 </pages:BookImagesPageXaml>

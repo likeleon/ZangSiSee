@@ -9,7 +9,7 @@ namespace ZangSiSee.Models
         public string Title { get; }
         public int Order { get; }
         public string Url { get; }
-        public Uri[] Images { get; set; }
+        public Uri[] ImageUris { get; set; }
         public override string Id => Title;
 
         public Book(Comic comic, string title, int order, string url)
