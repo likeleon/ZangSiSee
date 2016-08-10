@@ -52,6 +52,9 @@ namespace ZangSiSee.Services
         IEnumerable<Book> ParseBooks(IDocument doc, Comic comic)
         {
             var element = doc.QuerySelector("#recent-post") ?? doc.QuerySelector("span.contents");
+            if (element == null)
+                yield break;
+
             int order = 0;
             foreach (var a in element.QuerySelectorAll("a"))
                 yield return new Book(comic, a.TextContent, order++, a.GetAttribute("href"));

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -12,7 +15,7 @@ namespace ZangSiSee.ViewModels
     {
         public event EventHandler<bool> IsFullScreenChanged;
 
-        public Book Book { get; set; }        
+        public Book Book { get; set; }
 
         public ImageSource Image
         {
@@ -36,10 +39,11 @@ namespace ZangSiSee.ViewModels
             }
         }
 
-        public ICommand NextImageCommand => new Command(_ => ShowPage(PageNumber + 1));
-        public ICommand PrevImageCommand => new Command(_ => ShowPage(PageNumber - 1));
+        public ICommand NextImageCommand => new Command(async _ => await ShowPage(PageNumber + 1));
+        public ICommand PrevImageCommand => new Command(async _ => await ShowPage(PageNumber - 1));
 
-        readonly ConcurrentDictionary<Uri, ImageSource> _imageSources = new ConcurrentDictionary<Uri, ImageSource>();
+        readonly ConcurrentDictionary<Uri, byte[]> _imageCaches = new ConcurrentDictionary<Uri, byte[]>();
+        readonly HttpClient _httpClient = new HttpClient();
         ImageSource _image;
         int _pageNumber;
         bool _isFullScreen;
@@ -54,9 +58,7 @@ namespace ZangSiSee.ViewModels
             if (!await EnsureBookImageUrisGot())
                 return;
 
-            ShowPage(PageNumber, true);
-
-            await RunSafe(LoadImages()).ConfigureAwait(false);
+            await ShowPage(PageNumber, true).ConfigureAwait(false);
         }
 
         async Task<bool> EnsureBookImageUrisGot()
@@ -80,37 +82,58 @@ namespace ZangSiSee.ViewModels
             }
         }
 
-        void ShowPage(int pageNumber, bool force = false)
+        async Task ShowPage(int pageNumber, bool force = false)
         {
             if (Book.ImageUris.IsNullOrEmpty())
                 return;
 
-            if (!force && PageNumber == pageNumber)
+            int clampedPage = pageNumber.Clamp(0, Book.ImageUris.Length);
+            if (!force && PageNumber == clampedPage)
                 return;
 
-            PageNumber = pageNumber;
-            var uri = Book.ImageUris[pageNumber.Clamp(0, Book.ImageUris.Length)];
-            Image = GetImageSource(uri);
+            PageNumber = clampedPage;
+            Image = GetImageSource(Book.ImageUris[PageNumber]);
+
+            var urisToCache = Book.ImageUris
+                .Skip(PageNumber + 1)
+                .Take(3)
+                .Where(uri => !_imageCaches.ContainsKey(uri)).ToArray();
+            if (urisToCache.Length > 0)
+                await RunSafe(CacheImages(urisToCache)).ConfigureAwait(false);
         }
 
         ImageSource GetImageSource(Uri uri)
         {
-            ImageSource imageSource;
-            if (_imageSources.TryGetValue(uri, out imageSource))
-                return imageSource;
+            byte[] bytes;
+            if (_imageCaches.TryGetValue(uri, out bytes) && bytes != null)
+                return ImageSource.FromStream(() => new MemoryStream(bytes));
 
             return ImageSource.FromUri(uri);
         }
 
-        Task LoadImages()
+        Task CacheImages(Uri[] uris)
         {
-            return new Task(() =>
+            return new Task(async () =>
             {
-                if (Book == null)
-                    throw new InvalidOperationException("Book should not null");
+                if (uris.Length <= 0)
+                    throw new ArgumentException("uri list should not be empty", nameof(uris));
 
-                foreach (var uri in Book.ImageUris)
-                    _imageSources.TryAdd(uri, ImageSource.FromUri(uri));
+                foreach (var uri in uris)
+                {
+                    if (!_imageCaches.TryAdd(uri, null))
+                        continue;
+
+                    try
+                    {
+                        var bytes = await _httpClient.GetByteArrayAsync(uri).ConfigureAwait(false);
+                        _imageCaches.TryUpdate(uri, bytes, null);
+                    }
+                    catch
+                    {
+                        byte[] bytes;
+                        _imageCaches.TryRemove(uri, out bytes);
+                    }
+                }
             });
         }
     }
