@@ -108,10 +108,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Gestures\SwipeGestureListener.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Providers\StatusBar.cs" />
-    <Compile Include="Providers\SwipeableImageRenderer.cs" />
     <Compile Include="Providers\ToastNotifier.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

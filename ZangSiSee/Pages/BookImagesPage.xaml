@@ -5,7 +5,25 @@
                           xmlns:pages="clr-namespace:ZangSiSee.Pages"
                           xmlns:renderers="clr-namespace:ZangSiSee.Renderers"
                           BackgroundColor="Black">
-  <renderers:SwipeableImage Source="{Binding Image}" Aspect="AspectFit"
-                            SwipeLeftCommand="{Binding NextImageCommand}"
-                            SwipeRightCommand="{Binding PrevImageCommand}"/>
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="2*" />
+    </Grid.ColumnDefinitions>
+    <Image Grid.ColumnSpan="2"
+           Source="{Binding Image}"
+           Aspect="AspectFit">
+    </Image>
+    <BoxView BackgroundColor="Transparent">
+      <BoxView.GestureRecognizers>
+        <TapGestureRecognizer Command="{Binding PrevImageCommand}" />
+      </BoxView.GestureRecognizers>  
+    </BoxView>
+    <BoxView Grid.Column="1" 
+             BackgroundColor="Transparent">
+      <BoxView.GestureRecognizers>
+        <TapGestureRecognizer Command="{Binding NextImageCommand}" />
+      </BoxView.GestureRecognizers>  
+    </BoxView>
+  </Grid>
 </pages:BookImagesPageXaml>

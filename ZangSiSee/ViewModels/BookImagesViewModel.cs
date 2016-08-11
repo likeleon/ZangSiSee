@@ -13,8 +13,6 @@ namespace ZangSiSee.ViewModels
 {
     public class BookImagesViewModel : BaseViewModel
     {
-        public event EventHandler<bool> IsFullScreenChanged;
-
         public Book Book { get; set; }
 
         public ImageSource Image
@@ -29,16 +27,6 @@ namespace ZangSiSee.ViewModels
             private set { SetPropertyChanged(ref _pageNumber, value); }
         }
 
-        public bool IsFullScreen
-        {
-            get { return _isFullScreen; }
-            private set
-            {
-                if (SetPropertyChanged(ref _isFullScreen, value))
-                    IsFullScreenChanged?.Invoke(this, value);
-            }
-        }
-
         public ICommand NextImageCommand => new Command(async _ => await ShowPage(PageNumber + 1));
         public ICommand PrevImageCommand => new Command(async _ => await ShowPage(PageNumber - 1));
 
@@ -46,12 +34,6 @@ namespace ZangSiSee.ViewModels
         readonly HttpClient _httpClient = new HttpClient();
         ImageSource _image;
         int _pageNumber;
-        bool _isFullScreen;
-
-        public BookImagesViewModel()
-        {
-            IsFullScreen = true;
-        }
 
         public async Task GetImages()
         {
