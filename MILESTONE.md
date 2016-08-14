@@ -3,6 +3,8 @@
 - [ ] OnSleep/Awake
 - [ ] 첫 로딩시 메시지 보여주기
 - [ ] WithTimeout
+- [ ] CacheImage가 느려질 경우 Indicator 표시
+- [ ] CacheImage에 대한 Timeout 처리
 
 # 페이지 뷰
 - [ ] 하단 UI 구성

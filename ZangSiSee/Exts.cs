@@ -2,9 +2,11 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using ZangSiSee.Interfaces;
 using ZangSiSee.Models;
+using ZangSiSee.Primitives;
 
 namespace ZangSiSee
 {
@@ -44,15 +46,9 @@ namespace ZangSiSee
             });
         }
 
-        public static bool IsNullOrEmpty(this string str)
-        {
-            return string.IsNullOrEmpty(str);
-        }
+        public static bool IsNullOrEmpty(this string str) => string.IsNullOrEmpty(str);
 
-        public static string F(string format, params object[] args)
-        {
-            return string.Format(format, args);
-        }
+        public static string F(string format, params object[] args) => string.Format(format, args);
 
         public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T>
         {
@@ -65,5 +61,8 @@ namespace ZangSiSee
         }
 
         public static bool IsNullOrEmpty<T>(this IEnumerable<T> e) => e == null || !e.Any();
+
+        public static EventHandler<T> Throttle<T>(this EventHandler<T> handler, TimeSpan dueTime) where T : EventArgs 
+            => new ThrottledEventHandler<T>(handler, dueTime);
     }
 }

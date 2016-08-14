@@ -27,6 +27,12 @@ namespace ZangSiSee.ViewModels
             private set { SetPropertyChanged(ref _pageNumber, value); }
         }
 
+        public int SlidingPageNumber
+        {
+            get { return _slidingPageNumber; }
+            set { SetPropertyChanged(ref _slidingPageNumber, value); }
+        }
+
         public int MaxPageNumber => Book.ImageUris?.Length ?? 1;
 
         public ICommand NextImageCommand => new Command(async _ => await ShowPage(PageNumber + 1));
@@ -36,6 +42,12 @@ namespace ZangSiSee.ViewModels
         readonly HttpClient _httpClient = new HttpClient();
         ImageSource _image;
         int _pageNumber = 1; // starts from 1
+        int _slidingPageNumber;
+
+        public BookImagesViewModel()
+        {
+            SlidingPageNumber = _pageNumber;
+        }
 
         public async Task GetImages()
         {
@@ -67,7 +79,7 @@ namespace ZangSiSee.ViewModels
             }
         }
 
-        async Task ShowPage(int pageNumber, bool force = false)
+        public async Task ShowPage(int pageNumber, bool force = false)
         {
             if (Book.ImageUris.IsNullOrEmpty())
                 return;
@@ -113,8 +125,9 @@ namespace ZangSiSee.ViewModels
                         var bytes = await _httpClient.GetByteArrayAsync(uri).ConfigureAwait(false);
                         _imageCaches.TryUpdate(uri, bytes, null);
                     }
-                    catch
+                    catch (Exception ex)
                     {
+                        ex.Message.ToToast(Interfaces.ToastNotificationType.Warning, "이미지 가져오기 실패");
                         byte[] bytes;
                         _imageCaches.TryRemove(uri, out bytes);
                     }
