@@ -4,8 +4,13 @@
                           x:Class="ZangSiSee.Pages.BookImagesPage"
                           xmlns:pages="clr-namespace:ZangSiSee.Pages"
                           xmlns:renderers="clr-namespace:ZangSiSee.Renderers"
+                          xmlns:views="clr-namespace:ZangSiSee.Views"
                           BackgroundColor="Black">
   <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="*" />
       <ColumnDefinition Width="2*" />
@@ -25,5 +30,6 @@
         <TapGestureRecognizer Command="{Binding NextImageCommand}" />
       </BoxView.GestureRecognizers>  
     </BoxView>
+    <views:ImageControlPanel Grid.Row="1" Grid.ColumnSpan="2" />
   </Grid>
 </pages:BookImagesPageXaml>

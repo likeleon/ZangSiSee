@@ -27,13 +27,15 @@ namespace ZangSiSee.ViewModels
             private set { SetPropertyChanged(ref _pageNumber, value); }
         }
 
+        public int MaxPageNumber => Book.ImageUris?.Length ?? 1;
+
         public ICommand NextImageCommand => new Command(async _ => await ShowPage(PageNumber + 1));
         public ICommand PrevImageCommand => new Command(async _ => await ShowPage(PageNumber - 1));
 
         readonly ConcurrentDictionary<Uri, byte[]> _imageCaches = new ConcurrentDictionary<Uri, byte[]>();
         readonly HttpClient _httpClient = new HttpClient();
         ImageSource _image;
-        int _pageNumber;
+        int _pageNumber = 1; // starts from 1
 
         public async Task GetImages()
         {
@@ -53,6 +55,7 @@ namespace ZangSiSee.ViewModels
                 try
                 {
                     Book.ImageUris = await ZangSiSiService.Instance.GetImages(Book);
+                    SetPropertyChanged(nameof(MaxPageNumber));
                     return true;
                 }
                 catch (Exception e)
@@ -69,15 +72,15 @@ namespace ZangSiSee.ViewModels
             if (Book.ImageUris.IsNullOrEmpty())
                 return;
 
-            int clampedPage = pageNumber.Clamp(0, Book.ImageUris.Length);
+            int clampedPage = pageNumber.Clamp(1, MaxPageNumber);
             if (!force && PageNumber == clampedPage)
                 return;
 
             PageNumber = clampedPage;
-            Image = GetImageSource(Book.ImageUris[PageNumber]);
+            Image = GetImageSource(Book.ImageUris[PageNumber - 1]);
 
             var urisToCache = Book.ImageUris
-                .Skip(PageNumber + 1)
+                .Skip(PageNumber)
                 .Take(3)
                 .Where(uri => !_imageCaches.ContainsKey(uri)).ToArray();
             if (urisToCache.Length > 0)
