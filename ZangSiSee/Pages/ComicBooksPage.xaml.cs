@@ -18,7 +18,7 @@ namespace ZangSiSee.Pages
             InitializeComponent();
             Title = ViewModel.Comic.Title;
 
-            await ViewModel.GetBooks().ConfigureAwait(false);
+            await ViewModel.Refresh().ConfigureAwait(false);
         }
 
         protected override void OnAppearing()

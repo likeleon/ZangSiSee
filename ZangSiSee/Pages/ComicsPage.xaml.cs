@@ -15,7 +15,7 @@ namespace ZangSiSee.Pages
             InitializeComponent();
             Title = "만화 목록";
 
-            await ViewModel.RemoteRefresh().ConfigureAwait(false);
+            await ViewModel.Refresh().ConfigureAwait(false);
         }
 
         protected override void OnAppearing()

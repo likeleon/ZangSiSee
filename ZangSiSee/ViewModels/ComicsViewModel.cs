@@ -25,7 +25,14 @@ namespace ZangSiSee.ViewModels
 
         string _searchText;
 
-        public async Task RemoteRefresh()
+        public async Task Refresh()
+        {
+            LocalRefresh();
+            if (Comics.Count <= 0)
+                await RemoteRefresh();
+        }
+
+        async Task RemoteRefresh()
         {
             using (new Busy(this))
             {

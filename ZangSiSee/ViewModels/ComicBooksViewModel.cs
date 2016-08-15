@@ -15,14 +15,14 @@ namespace ZangSiSee.ViewModels
 
         public ICommand RefreshBooksCommand => new Command(async () => { await RemoteRefresh(); });
 
-        public async Task GetBooks()
+        public async Task Refresh()
         {
             LocalRefresh();
             if (Books.Count <= 0)
                 await RemoteRefresh();
         }
 
-        public async Task RemoteRefresh()
+        async Task RemoteRefresh()
         {
             using (new Busy(this))
             {
