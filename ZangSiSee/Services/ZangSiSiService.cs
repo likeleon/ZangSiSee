@@ -17,11 +17,9 @@ namespace ZangSiSee.Services
 
         public async Task<Comic[]> GetAllComics()
         {
-            DataManager.Instance.Comics.Clear();
-
             var document = await GetDocument(Site);
             var comics = ParseComics(document).ToArray();
-            comics.Do(c => DataManager.Instance.Comics.AddOrUpdate(c));
+            DataManager.Instance.ReplaceAllComics(comics);
             return comics;
         }
 
@@ -34,18 +32,30 @@ namespace ZangSiSee.Services
         IEnumerable<Comic> ParseComics(IDocument doc)
         {
             foreach (var a in doc.QuerySelector("#recent-post").QuerySelectorAll("a.tx-link"))
-                yield return new Comic(a.TextContent, a.GetAttribute("href"), true);
+            {
+                yield return new Comic()
+                {
+                    Title = a.TextContent,
+                    Url = a.GetAttribute("href"),
+                    Concluded = true
+                };
+            }
+
             foreach (var a in doc.QuerySelector("#manga-list").QuerySelectorAll("a.lists").Skip(3))
-                yield return new Comic(a.TextContent, a.GetAttribute("href"), false);
+            {
+                yield return new Comic()
+                {
+                    Title = a.TextContent,
+                    Url = a.GetAttribute("href")
+                };
+            }
         }
 
         public async Task<Book[]> GetBooks(Comic comic)
         {
-            DataManager.Instance.Books.Clear();
-
             var document = await GetDocument(comic.Url);
             var books = ParseBooks(document, comic).ToArray();
-            books.Do(b => DataManager.Instance.Books.AddOrUpdate(b));
+            DataManager.Instance.ReplaceBooks(comic, books);
             return books;
         }
 
@@ -57,7 +67,15 @@ namespace ZangSiSee.Services
 
             int order = 0;
             foreach (var a in element.QuerySelectorAll("a"))
-                yield return new Book(comic, a.TextContent, order++, a.GetAttribute("href"));
+            {
+                yield return new Book()
+                {
+                    ComicTitle = comic.Title,
+                    Title = a.TextContent,
+                    Order = order++,
+                    Url = a.GetAttribute("href")
+                };
+            }
         }
 
         public async Task<Uri[]> GetImages(Book book)

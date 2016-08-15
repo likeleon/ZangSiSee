@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
 using ZangSiSee.Interfaces;
-using ZangSiSee.Models;
 using ZangSiSee.Primitives;
 
 namespace ZangSiSee
@@ -17,20 +15,6 @@ namespace ZangSiSee
         {
             foreach (var ee in e)
                 a(ee);
-        }
-
-        public static void AddOrUpdate<T>(this ConcurrentDictionary<string, T> dict, T model) where T : BaseModel
-        {
-            if (model == null)
-                throw new ArgumentNullException(nameof(model));
-
-            if (dict.ContainsKey(model.Id))
-            {
-                if (!model.Equals(dict[model.Id]))
-                    dict[model.Id] = model;
-            }
-            else
-                dict.TryAdd(model.Id, model);
         }
 
         public static void ToToast(this string message, ToastNotificationType type = ToastNotificationType.Info, string title = null)

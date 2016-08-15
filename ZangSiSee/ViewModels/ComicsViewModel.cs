@@ -37,7 +37,7 @@ namespace ZangSiSee.ViewModels
         void LocalRefresh()
         {
             Comics.Clear();
-            foreach (var comic in DataManager.Instance.Comics.Values.OrderBy(c => c.Title))
+            foreach (var comic in DataManager.Instance.AllComics())
             {
                 if (!SearchText.IsNullOrEmpty() && !comic.Title.Contains(SearchText))
                     continue;
