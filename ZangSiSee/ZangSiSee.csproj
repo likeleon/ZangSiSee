@@ -41,10 +41,11 @@
     <Compile Include="BaseContentPage.cs" />
     <Compile Include="BaseNotify.cs" />
     <Compile Include="BaseViewModel.cs" />
+    <Compile Include="Converters\RoundToIntConverter.cs" />
     <Compile Include="Exts.cs" />
     <Compile Include="Interfaces\IStatusBar.cs" />
     <Compile Include="Interfaces\IToastNotifier.cs" />
-    <Compile Include="InverseBoolConverter.cs" />
+    <Compile Include="Converters\InverseBoolConverter.cs" />
     <Compile Include="Messages.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Book.cs" />

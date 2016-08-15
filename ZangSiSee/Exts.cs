@@ -2,7 +2,6 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using ZangSiSee.Interfaces;
 using ZangSiSee.Models;
@@ -12,10 +11,7 @@ namespace ZangSiSee
 {
     public static class Exts
     {
-        public static Lazy<T> Lazy<T>(Func<T> func)
-        {
-            return new Lazy<T>(func);
-        }
+        public static Lazy<T> Lazy<T>(Func<T> func) => new Lazy<T>(func);
 
         public static void Do<T>(this IEnumerable<T> e, Action<T> a)
         {

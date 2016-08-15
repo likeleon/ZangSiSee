@@ -7,7 +7,7 @@ namespace ZangSiSee.Pages
 {
     public partial class BookImagesPage : BookImagesPageXaml
     {
-        EventHandler<ValueChangedEventArgs> ShowSlidingPageWithThrottling;
+        EventHandler<ValueChangedEventArgs> ShowPageWithThrottle;
 
         public BookImagesPage(Book book)
         {
@@ -18,11 +18,12 @@ namespace ZangSiSee.Pages
         protected async override void Initialize()
         {
             InitializeComponent();
+
             Title = ViewModel.Book.Title;
 
-            ShowSlidingPageWithThrottling = Exts.Throttle<ValueChangedEventArgs>(async (_, e) =>
+            ShowPageWithThrottle = Exts.Throttle<ValueChangedEventArgs>(async (_, e) =>
             {
-                await ViewModel.ShowPage(ViewModel.SlidingPageNumber);
+                await ViewModel.ShowPage(ViewModel.SliderPageNumber);
             }, TimeSpan.FromMilliseconds(500));
 
             await ViewModel.GetImages().ConfigureAwait(false);
@@ -31,18 +32,14 @@ namespace ZangSiSee.Pages
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            pageSlider.ValueChanged += UpdateSlidingPageNumber;
-            pageSlider.ValueChanged += ShowSlidingPageWithThrottling;
+            pageSlider.ValueChanged += ShowPageWithThrottle;
         }
 
         protected override void OnDisappearing()
         {
-            pageSlider.ValueChanged -= ShowSlidingPageWithThrottling;
-            pageSlider.ValueChanged -= UpdateSlidingPageNumber;
+            pageSlider.ValueChanged -= ShowPageWithThrottle;
             base.OnDisappearing();
         }
-
-        void UpdateSlidingPageNumber(object sender, ValueChangedEventArgs e) => ViewModel.SlidingPageNumber = (int)Math.Round(e.NewValue);
     }
 
     public partial class BookImagesPageXaml : BaseContentPage<BookImagesViewModel>

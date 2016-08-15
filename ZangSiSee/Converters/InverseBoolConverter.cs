@@ -2,7 +2,7 @@
 using System.Globalization;
 using Xamarin.Forms;
 
-namespace ZangSiSee
+namespace ZangSiSee.Converters
 {
     public class InverseBoolConverter : IValueConverter
     {

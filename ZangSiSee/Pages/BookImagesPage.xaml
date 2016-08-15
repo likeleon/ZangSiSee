@@ -5,6 +5,7 @@
                           xmlns:pages="clr-namespace:ZangSiSee.Pages"
                           xmlns:renderers="clr-namespace:ZangSiSee.Renderers"
                           xmlns:views="clr-namespace:ZangSiSee.Views"
+                          xmlns:converters="clr-namespace:ZangSiSee.Converters"
                           BackgroundColor="Black">
   <Grid>
     <Grid.RowDefinitions>
@@ -34,9 +35,9 @@
       <StackLayout Orientation="Horizontal">
         <Slider x:Name="pageSlider" HorizontalOptions="FillAndExpand"
                 Maximum="{Binding MaxPageNumber}"
-                Minimum="0"
-                Value="{Binding PageNumber, Mode=OneWay}" />
-        <Label Text="{Binding SlidingPageNumber}" />
+                Minimum="{Binding MinPageNumber}"
+                Value="{Binding SliderPageNumber, Converter={x:Static converters:RoundedIntToDoubleConverter .Instance}}"/>
+        <Label Text="{Binding SliderPageNumber}" />
         <Label Text="{Binding MaxPageNumber, StringFormat='/ \{0\}'}" />
       </StackLayout>
     </StackLayout>

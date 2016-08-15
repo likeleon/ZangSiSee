@@ -24,16 +24,21 @@ namespace ZangSiSee.ViewModels
         public int PageNumber
         {
             get { return _pageNumber; }
-            private set { SetPropertyChanged(ref _pageNumber, value); }
+            private set
+            {
+                if (SetPropertyChanged(ref _pageNumber, value))
+                    SliderPageNumber = value;
+            }
         }
 
-        public int SlidingPageNumber
+        public int SliderPageNumber
         {
             get { return _slidingPageNumber; }
             set { SetPropertyChanged(ref _slidingPageNumber, value); }
         }
 
-        public int MaxPageNumber => Book.ImageUris?.Length ?? 1;
+        public int MinPageNumber { get; } = 1;
+        public int MaxPageNumber => Book.ImageUris?.Length ?? MinPageNumber + 1;
 
         public ICommand NextImageCommand => new Command(async _ => await ShowPage(PageNumber + 1));
         public ICommand PrevImageCommand => new Command(async _ => await ShowPage(PageNumber - 1));
@@ -46,7 +51,7 @@ namespace ZangSiSee.ViewModels
 
         public BookImagesViewModel()
         {
-            SlidingPageNumber = _pageNumber;
+            SliderPageNumber = _pageNumber;
         }
 
         public async Task GetImages()
