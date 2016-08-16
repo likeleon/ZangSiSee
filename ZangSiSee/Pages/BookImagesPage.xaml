@@ -31,14 +31,19 @@
         <TapGestureRecognizer Command="{Binding NextImageCommand}" />
       </BoxView.GestureRecognizers>  
     </BoxView>
-    <StackLayout Grid.Row="1" Grid.ColumnSpan="2" Padding="10">
-      <StackLayout Orientation="Horizontal">
-        <Slider x:Name="pageSlider" HorizontalOptions="FillAndExpand"
+    <StackLayout Grid.Row="1" Grid.ColumnSpan="2" Padding="10" BackgroundColor="#22FFFFFF">
+      <StackLayout Orientation="Horizontal" Spacing="0">
+        <Slider x:Name="pageSlider"  Margin="6" HorizontalOptions="FillAndExpand"
                 Maximum="{Binding MaxPageNumber}"
                 Minimum="{Binding MinPageNumber}"
                 Value="{Binding SliderPageNumber, Converter={x:Static converters:RoundedIntToDoubleConverter.Instance}}"/>
-        <Label Text="{Binding SliderPageNumber}" />
-        <Label Text="{Binding MaxPageNumber, StringFormat='/ \{0\}'}" />
+        <Label Text="{Binding SliderPageNumber}" TextColor="White" />
+        <Label Text="{Binding MaxPageNumber, StringFormat='/\{0\}'}" TextColor="White" />
+      </StackLayout>
+      <StackLayout Orientation="Horizontal">
+        <Button HorizontalOptions="CenterAndExpand" Image="compress" Style="{StaticResource imageButtonStyle}" />
+        <Button HorizontalOptions="CenterAndExpand" Image="compress" Style="{StaticResource imageButtonStyle}" />
+        <Button HorizontalOptions="CenterAndExpand" Image="expand" Style="{StaticResource imageButtonStyle}" />
       </StackLayout>
     </StackLayout>
   </Grid>
