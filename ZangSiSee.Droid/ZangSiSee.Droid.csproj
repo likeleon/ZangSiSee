@@ -124,6 +124,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ImageButtonRenderer.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Providers\SQLiteAndroid.cs" />
     <Compile Include="Providers\StatusBar.cs" />
