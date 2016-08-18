@@ -2,6 +2,7 @@
 <pages:BookImagesPageXaml xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                           x:Class="ZangSiSee.Pages.BookImagesPage"
+                          xmlns:controls="clr-namespace:ZangSiSee.Controls"
                           xmlns:pages="clr-namespace:ZangSiSee.Pages"
                           xmlns:renderers="clr-namespace:ZangSiSee.Renderers"
                           xmlns:views="clr-namespace:ZangSiSee.Views"
@@ -16,16 +17,16 @@
       <ColumnDefinition Width="*" />
       <ColumnDefinition Width="2*" />
     </Grid.ColumnDefinitions>
-    <Image Grid.ColumnSpan="2"
+    <Image Grid.RowSpan="2" Grid.ColumnSpan="2"
            Source="{Binding Image}"
            Aspect="AspectFit">
     </Image>
-    <BoxView BackgroundColor="Transparent">
+    <BoxView Grid.RowSpan="2" BackgroundColor="Transparent">
       <BoxView.GestureRecognizers>
         <TapGestureRecognizer Command="{Binding PrevImageCommand}" />
       </BoxView.GestureRecognizers>  
     </BoxView>
-    <BoxView Grid.Column="1" 
+    <BoxView Grid.RowSpan="2" Grid.Column="1" 
              BackgroundColor="Transparent">
       <BoxView.GestureRecognizers>
         <TapGestureRecognizer Command="{Binding NextImageCommand}" />
@@ -41,9 +42,9 @@
         <Label Text="{Binding MaxPageNumber, StringFormat='/\{0\}'}" TextColor="White" />
       </StackLayout>
       <StackLayout Orientation="Horizontal">
-        <Button HorizontalOptions="CenterAndExpand" Image="compress" Style="{StaticResource imageButtonStyle}" />
-        <Button HorizontalOptions="CenterAndExpand" Image="compress" Style="{StaticResource imageButtonStyle}" />
-        <Button HorizontalOptions="CenterAndExpand" Image="expand" Style="{StaticResource imageButtonStyle}" />
+        <controls:ImageButton HorizontalOptions="CenterAndExpand" ImageSource="compress" />
+        <controls:ImageButton HorizontalOptions="CenterAndExpand" ImageSource="compress" />
+        <controls:ImageButton HorizontalOptions="CenterAndExpand" ImageSource="expand" />
       </StackLayout>
     </StackLayout>
   </Grid>

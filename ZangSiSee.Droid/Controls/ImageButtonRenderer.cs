@@ -1,61 +1,68 @@
 ﻿using Android.Graphics;
-using Android.Graphics.Drawables;
 using Android.Views;
-using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using ZangSiSee.Controls;
-using View = Android.Views.View;
+using ZangSiSee.Droid.Controls;
 
+[assembly: ExportRenderer(typeof(ImageButton), typeof(ImageButtonRenderer))]
 namespace ZangSiSee.Droid.Controls
 {
-    public class ImageButtonRenderer : Xamarin.Forms.Platform.Android.AppCompat.ButtonRenderer
+    public class ImageButtonRenderer : ViewRenderer<ImageButton, Android.Widget.ImageButton>
     {
-        ImageButton ImageButton => (ImageButton)Element;
+        Bitmap _image;
 
-        static float _density = float.MinValue;
-
-        protected async override void OnElementChanged(ElementChangedEventArgs<Button> e)
+        protected async override void OnElementChanged(ElementChangedEventArgs<ImageButton> e)
         {
             base.OnElementChanged(e);
 
-            _density = Resources.DisplayMetrics.Density;
+            if (e.OldElement == null && Control == null)
+            {
+                var button = new Android.Widget.ImageButton(Context);
+                button.Touch += OnButtonTouch;
+                button.SetBackgroundColor(Android.Graphics.Color.Transparent);
+                button.Tag = this;
+                SetNativeControl(button);
+            }
 
-            var targetButton = Control;
-            targetButton?.SetOnTouchListener(TouchListener.Instance);
+            await UpdateImage();
+        }
 
-            if (Element != null && ImageButton.Source != null)
-                await SetImageSourceAsync(targetButton, ImageButton).ConfigureAwait(false);
+        protected async override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+            if (e.PropertyName == ImageButton.ImageSourceProperty.PropertyName)
+            {
+                _image = null;
+                await UpdateImage();
+            }
         }
 
         protected override void Dispose(bool disposing)
         {
+            if (disposing && Control != null)
+                Control.Touch -= OnButtonTouch;
             base.Dispose(disposing);
-            if (disposing)
-                Control?.Dispose();
         }
 
-        async Task SetImageSourceAsync(Android.Widget.Button targetButton, ImageButton model)
+        void OnButtonTouch(object sender, TouchEventArgs e)
         {
-            if (targetButton == null || targetButton.Handle == IntPtr.Zero || model == null)
-                return;
-
-            using (var bitmap = await GetBitmapAsync(model.Source).ConfigureAwait(false))
+            if (e.Event.Action == MotionEventActions.Down)
+                Control.Alpha = (float)Element.Opacity / 2;
+            else if (e.Event.Action == MotionEventActions.Up)
             {
-                if (bitmap == null)
-                    targetButton.SetCompoundDrawables(null, null, null, null);
-                else
-                {
-                    var drawable = new BitmapDrawable(bitmap);
-                    using (var scaledDrawable = GetScaleDrawable(drawable, GetWidth(model.ImageWidthRequest), GetHeight(model.ImageHeightRequest)))
-                    {
-                        targetButton.CompoundDrawablePadding = RequestToPixels(model.Padding);
-                        targetButton.Gravity = GravityFlags.Center;
-                        targetButton.SetCompoundDrawables(null, scaledDrawable, null, null);
-                    }
-                }
+                Control.Alpha = (float)Element.Opacity;
+                if (Element?.Command?.CanExecute(null) == true)
+                    Element?.Command?.Execute(null);
             }
+        }
+
+        async Task UpdateImage()
+        {
+            using (var bitmap = await GetBitmapAsync(Element.ImageSource).ConfigureAwait(false))
+                Control.SetImageBitmap(bitmap);
         }
 
         async Task<Bitmap> GetBitmapAsync(ImageSource source)
@@ -79,44 +86,6 @@ namespace ZangSiSee.Droid.Controls
                 return new StreamImagesourceHandler();
             else
                 return null;
-        }
-
-        Drawable GetScaleDrawable(Drawable drawable, int width, int height)
-        {
-            var returnValue = new ScaleDrawable(drawable, 0, 100, 100).Drawable;
-            returnValue.SetBounds(0, 0, RequestToPixels(width), RequestToPixels(height));
-            return returnValue;
-        }
-
-        int RequestToPixels(int sizeRequest)
-        {
-            if (_density == float.MinValue)
-            {
-                if (Resources.Handle == IntPtr.Zero || Resources.DisplayMetrics.Handle == IntPtr.Zero)
-                    _density = 1.0f;
-                else
-                    _density = Resources.DisplayMetrics.Density;
-            }
-            return (int)(sizeRequest * _density);
-        }
-
-        int GetWidth(int requestetWidth) => requestetWidth <= 0 ? 50 : requestetWidth;
-        int GetHeight(int requestedHeight) => requestedHeight <= 0 ? 50 : requestedHeight;
-    }
-
-    class TouchListener : Java.Lang.Object, View.IOnTouchListener
-    {
-        public static TouchListener Instance => _instance.Value;
-        static readonly Lazy<TouchListener> _instance = Exts.Lazy(() => new TouchListener());
-
-        TouchListener() { }
-
-        public bool OnTouch(View v, MotionEvent e)
-        {
-            var buttonRenderer = v.Tag as ButtonRenderer;
-            if (buttonRenderer != null && e.Action == MotionEventActions.Down)
-                buttonRenderer.Control.Text = buttonRenderer.Element.Text;
-            return false;
         }
     }
 }

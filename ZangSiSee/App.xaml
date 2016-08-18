@@ -50,11 +50,6 @@
         <Setter Property="BackgroundColor" Value="{StaticResource grayPrimary}" />
       </Style>
       <Style TargetType="Button" BasedOn="{StaticResource buttonStyle}" />
-      
-      <Style x:Key="imageButtonStyle" TargetType="Button">
-        <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="BorderColor" Value="Transparent" />
-      </Style>
     </ResourceDictionary>
   </Application.Resources>
 </Application>
