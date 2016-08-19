@@ -21,11 +21,22 @@ namespace ZangSiSee.Pages
 
             Title = ViewModel.Book.Title;
 
+            var weakSelf = new WeakReference<BookImagesPage>(this);
+            ViewModel.IsFullScreenChanged += (_, fullScreen) =>
+            {
+                BookImagesPage self;
+                if (!weakSelf.TryGetTarget(out self))
+                    return;
+
+                NavigationPage.SetHasNavigationBar(this, !fullScreen);
+            };
+
             ShowPageWithThrottle = Exts.Throttle<ValueChangedEventArgs>(async (_, e) =>
             {
                 await ViewModel.ShowPage(ViewModel.SliderPageNumber);
             }, TimeSpan.FromMilliseconds(500));
 
+            ViewModel.IsFullScreen = true;
             await ViewModel.GetImages().ConfigureAwait(false);
         }
 

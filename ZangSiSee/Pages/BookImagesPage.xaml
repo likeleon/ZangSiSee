@@ -17,22 +17,38 @@
       <ColumnDefinition Width="*" />
       <ColumnDefinition Width="2*" />
     </Grid.ColumnDefinitions>
+
+    <!-- 이미지 -->
     <Image Grid.RowSpan="2" Grid.ColumnSpan="2"
            Source="{Binding Image}"
            Aspect="AspectFit">
     </Image>
+    
+    <!-- 이전 이미지 보기 탭 영역 -->
     <BoxView Grid.RowSpan="2" BackgroundColor="Transparent">
       <BoxView.GestureRecognizers>
         <TapGestureRecognizer Command="{Binding PrevImageCommand}" />
       </BoxView.GestureRecognizers>  
     </BoxView>
+    
+    <!-- 다음 이미지 보기 탭 영역 -->
     <BoxView Grid.RowSpan="2" Grid.Column="1" 
              BackgroundColor="Transparent">
       <BoxView.GestureRecognizers>
         <TapGestureRecognizer Command="{Binding NextImageCommand}" />
       </BoxView.GestureRecognizers>  
     </BoxView>
-    <StackLayout Grid.Row="1" Grid.ColumnSpan="2" Padding="10" BackgroundColor="#22FFFFFF">
+
+    <!-- 전체 화면 나가기 버튼 -->
+    <controls:ImageButton Grid.Row="1" Grid.ColumnSpan="2"
+                          HorizontalOptions="EndAndExpand" ImageSource="compress"
+                          IsVisible="{Binding IsFullScreen}"
+                          Command="{Binding ExitFullScreenCommand}" />
+
+    <!-- 하단 컨트롤 패널 -->
+    <StackLayout Grid.Row="1" Grid.ColumnSpan="2" 
+                 Padding="10" BackgroundColor="#22FFFFFF"
+                 IsVisible="{Binding IsFullScreen, Converter={x:Static converters:InverseBoolConverter.Instance}}">
       <StackLayout Orientation="Horizontal" Spacing="0">
         <Slider x:Name="pageSlider"  Margin="6" HorizontalOptions="FillAndExpand"
                 Maximum="{Binding MaxPageNumber}"
@@ -41,10 +57,9 @@
         <Label Text="{Binding SliderPageNumber}" TextColor="White" />
         <Label Text="{Binding MaxPageNumber, StringFormat='/\{0\}'}" TextColor="White" />
       </StackLayout>
-      <StackLayout Orientation="Horizontal">
-        <controls:ImageButton HorizontalOptions="CenterAndExpand" ImageSource="compress" />
-        <controls:ImageButton HorizontalOptions="CenterAndExpand" ImageSource="compress" />
-        <controls:ImageButton HorizontalOptions="CenterAndExpand" ImageSource="expand" />
+      <StackLayout Orientation="Horizontal" >
+        <controls:ImageButton HorizontalOptions="CenterAndExpand" ImageSource="expand" 
+                              Command="{Binding EnterFullScreenCommand}"/>
       </StackLayout>
     </StackLayout>
   </Grid>
