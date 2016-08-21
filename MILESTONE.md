@@ -8,8 +8,9 @@
 - [x] Local database
 - [x] ImageButton
 
-# 페이지 뷰
-- [ ] 하단 UI 구성
-- [x] 하단 UI에 전체화면 토글 기능
-- [ ] 하단 UI에 한쪽/두쪽 보기
-- [ ] 하단 UI에 orientation 변경
+# 페이지 뷰 하단 UI
+- [ ] Go To
+- [ ] Bookmark
+- [ ] Change orientation
+- [ ] Toggle split view
+- [ ] Full Screen

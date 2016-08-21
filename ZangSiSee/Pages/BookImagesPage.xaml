@@ -41,13 +41,14 @@
 
     <!-- 전체 화면 나가기 버튼 -->
     <controls:ImageButton Grid.Row="1" Grid.ColumnSpan="2"
-                          HorizontalOptions="EndAndExpand" ImageSource="compress"
+                          HorizontalOptions="EndAndExpand" 
+                          ImageSource="compress" Opacity="0.7"
                           IsVisible="{Binding IsFullScreen}"
                           Command="{Binding ExitFullScreenCommand}" />
 
     <!-- 하단 컨트롤 패널 -->
     <StackLayout Grid.Row="1" Grid.ColumnSpan="2" 
-                 Padding="10" BackgroundColor="#22FFFFFF"
+                 Padding="10" BackgroundColor="#44FFFFFF"
                  IsVisible="{Binding IsFullScreen, Converter={x:Static converters:InverseBoolConverter.Instance}}">
       <StackLayout Orientation="Horizontal" Spacing="0">
         <Slider x:Name="pageSlider"  Margin="6" HorizontalOptions="FillAndExpand"
@@ -58,6 +59,14 @@
         <Label Text="{Binding MaxPageNumber, StringFormat='/\{0\}'}" TextColor="White" />
       </StackLayout>
       <StackLayout Orientation="Horizontal" >
+        <controls:ImageButton HorizontalOptions="CenterAndExpand" ImageSource="route" 
+                              Command="{Binding GoToPageCommand}"/>
+        <controls:ImageButton HorizontalOptions="CenterAndExpand" ImageSource="bookmark" 
+                              Command="{Binding AddBookmarkCommand}"/>
+        <controls:ImageButton HorizontalOptions="CenterAndExpand" ImageSource="rotate_to_portrait" 
+                              Command="{Binding ChangeOrientationCommand}"/>
+        <controls:ImageButton HorizontalOptions="CenterAndExpand" ImageSource="picture" 
+                              Command="{Binding ToggleSplitViewCommand}"/>
         <controls:ImageButton HorizontalOptions="CenterAndExpand" ImageSource="expand" 
                               Command="{Binding EnterFullScreenCommand}"/>
       </StackLayout>
