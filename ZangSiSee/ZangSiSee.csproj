@@ -50,6 +50,7 @@
     <Compile Include="Converters\InverseBoolConverter.cs" />
     <Compile Include="Messages.cs" />
     <Compile Include="Models\Book.cs" />
+    <Compile Include="Models\Bookmark.cs" />
     <Compile Include="Models\Comic.cs" />
     <Compile Include="Pages\BookImagesPage.xaml.cs">
       <DependentUpon>BookImagesPage.xaml</DependentUpon>

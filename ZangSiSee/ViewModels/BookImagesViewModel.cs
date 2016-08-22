@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using ZangSiSee.Interfaces;
 using ZangSiSee.Models;
 using ZangSiSee.Services;
 
@@ -54,6 +55,7 @@ namespace ZangSiSee.ViewModels
 
         public ICommand NextImageCommand => new Command(async _ => await ShowPage(PageNumber + 1));
         public ICommand PrevImageCommand => new Command(async _ => await ShowPage(PageNumber - 1));
+        public ICommand AddBookmarkCommand => new Command(_ => AddBookmark());
         public ICommand EnterFullScreenCommand => new Command(_ => IsFullScreen = true);
         public ICommand ExitFullScreenCommand => new Command(_ => IsFullScreen = false);
 
@@ -92,7 +94,7 @@ namespace ZangSiSee.ViewModels
                 }
                 catch (Exception e)
                 {
-                    e.Message.ToToast(Interfaces.ToastNotificationType.Warning, "이미지 리스트 획득 실패");
+                    e.Message.ToToast(ToastNotificationType.Warning, "이미지 리스트 획득 실패");
                     HandleException(e);
                     return false;
                 }
@@ -147,12 +149,32 @@ namespace ZangSiSee.ViewModels
                     }
                     catch (Exception ex)
                     {
-                        ex.Message.ToToast(Interfaces.ToastNotificationType.Warning, "이미지 가져오기 실패");
+                        ex.Message.ToToast(ToastNotificationType.Warning, "이미지 가져오기 실패");
                         byte[] bytes;
                         _imageCaches.TryRemove(uri, out bytes);
                     }
                 }
             });
+        }
+
+        public void AddBookmark()
+        {
+            if (DataManager.Instance.GetBookmark(Book, PageNumber) != null)
+            {
+                "이미 북마크되어 있습니다".ToToast(ToastNotificationType.Info, "북마크");
+                return;
+            }
+
+            try
+            {
+                DataManager.Instance.AddBookmark(Book, PageNumber);
+                "북마크 추가".ToToast(ToastNotificationType.Success, "북마크");
+            }
+            catch (Exception e)
+            {
+                ("북마크 실패: " + e.Message).ToToast(ToastNotificationType.Error, "북마크");
+                HandleException(e);
+            }
         }
     }
 }

@@ -23,15 +23,13 @@ namespace ZangSiSee.Services
             _database = DependencyService.Get<ISQLite>().GetConnection(_localDbName);
             _database.CreateTable<Comic>();
             _database.CreateTable<Book>();
+            _database.CreateTable<Bookmark>();
         }
 
         public IEnumerable<Comic> AllComics()
         {
             lock (_lock)
-            {
-                var counts = _database.Table<Comic>().Count();
                 return _database.Table<Comic>().OrderBy(c => c.Title);
-            }
         }
 
         public Comic GetComic(string id)
@@ -55,7 +53,7 @@ namespace ZangSiSee.Services
             lock (_lock)
                 return _database.Table<Book>().Where(b => b.ComicTitle == comic.Title);
         }
-        
+
         public void ReplaceBooks(Comic comic, IEnumerable<Book> books)
         {
             if (books.Any(b => b.ComicTitle != comic.Title))
@@ -66,6 +64,42 @@ namespace ZangSiSee.Services
                 _database.Table<Book>().Delete(b => b.ComicTitle == comic.Title);
                 _database.InsertAll(books);
             }
+        }
+
+        public IEnumerable<Bookmark> AllBookmarks()
+        {
+            lock (_lock)
+                return _database.Table<Bookmark>();
+        }
+
+        public Bookmark GetBookmark(Book book, int pageNumber)
+        {
+            lock (_lock)
+                return GetBookmarkInner(book, pageNumber);
+        }
+
+        Bookmark GetBookmarkInner(Book book, int pageNumber)
+        {
+            return _database.Table<Bookmark>().FirstOrDefault(m => m.BookTitle == book.Title && m.PageNumber == pageNumber);
+        }
+
+        public Bookmark AddBookmark(Book book, int pageNumber)
+        {
+            lock (_lock)
+            {
+                if (GetBookmarkInner(book, pageNumber) != null)
+                    throw new InvalidOperationException("Bookmark(book:{}, page:{}) already exist!".F(book.Title, pageNumber));
+
+                var bookmark = new Bookmark() { BookTitle = book.Title, PageNumber = pageNumber };
+                _database.Insert(bookmark);
+                return bookmark;
+            }
+        }
+
+        public bool RemoveBookmark(Book book, int pageNumber)
+        {
+            lock (_lock)
+                return _database.Table<Bookmark>().Delete(m => m.BookTitle == book.Title && m.PageNumber == pageNumber) > 0;
         }
     }
 }

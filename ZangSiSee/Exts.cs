@@ -28,7 +28,7 @@ namespace ZangSiSee
 
         public static bool IsNullOrEmpty(this string str) => string.IsNullOrEmpty(str);
 
-        public static string F(string format, params object[] args) => string.Format(format, args);
+        public static string F(this string format, params object[] args) => string.Format(format, args);
 
         public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T>
         {

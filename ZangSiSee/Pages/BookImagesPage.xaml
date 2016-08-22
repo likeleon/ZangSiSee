@@ -51,7 +51,7 @@
                  Padding="10" BackgroundColor="#44FFFFFF"
                  IsVisible="{Binding IsFullScreen, Converter={x:Static converters:InverseBoolConverter.Instance}}">
       <StackLayout Orientation="Horizontal" Spacing="0">
-        <Slider x:Name="pageSlider"  Margin="6" HorizontalOptions="FillAndExpand"
+        <Slider x:Name="pageSlider" Margin="6" HorizontalOptions="FillAndExpand"
                 Maximum="{Binding MaxPageNumber}"
                 Minimum="{Binding MinPageNumber}"
                 Value="{Binding SliderPageNumber, Converter={x:Static converters:RoundedIntToDoubleConverter.Instance}}"/>
@@ -59,8 +59,6 @@
         <Label Text="{Binding MaxPageNumber, StringFormat='/\{0\}'}" TextColor="White" />
       </StackLayout>
       <StackLayout Orientation="Horizontal" >
-        <controls:ImageButton HorizontalOptions="CenterAndExpand" ImageSource="route" 
-                              Command="{Binding GoToPageCommand}"/>
         <controls:ImageButton HorizontalOptions="CenterAndExpand" ImageSource="bookmark" 
                               Command="{Binding AddBookmarkCommand}"/>
         <controls:ImageButton HorizontalOptions="CenterAndExpand" ImageSource="rotate_to_portrait" 
