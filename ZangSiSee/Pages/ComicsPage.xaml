@@ -4,7 +4,8 @@
                   x:Class="ZangSiSee.Pages.ComicsPage"
                   xmlns:local="clr-namespace:ZangSiSee.Pages"
                   xmlns:views="clr-namespace:ZangSiSee.Views"
-                  Icon="Transparent">
+                  Icon="Transparent"
+                  Title="{Binding Title}">
   <StackLayout>
     <SearchBar Text="{Binding SearchText, Mode=TwoWay}" 
                TextColor="{StaticResource asphaltPrimary}" />

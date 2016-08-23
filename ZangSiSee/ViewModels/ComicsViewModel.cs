@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -24,6 +23,11 @@ namespace ZangSiSee.ViewModels
         public ICommand RefreshComicsCommand => new Command(async () => { await RemoteRefresh(); });
 
         string _searchText;
+
+        public ComicsViewModel()
+        {
+            Title = "만화 목록";
+        }
 
         public async Task Refresh()
         {

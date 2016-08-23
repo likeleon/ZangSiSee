@@ -7,7 +7,8 @@
                           xmlns:renderers="clr-namespace:ZangSiSee.Renderers"
                           xmlns:views="clr-namespace:ZangSiSee.Views"
                           xmlns:converters="clr-namespace:ZangSiSee.Converters"
-                          BackgroundColor="Black">
+                          BackgroundColor="Black"
+                          Title="{Binding Book.Title}">
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="*" />

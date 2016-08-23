@@ -19,8 +19,6 @@ namespace ZangSiSee.Pages
         {
             InitializeComponent();
 
-            Title = ViewModel.Book.Title;
-
             var weakSelf = new WeakReference<BookImagesPage>(this);
             ViewModel.IsFullScreenChanged += (_, fullScreen) =>
             {

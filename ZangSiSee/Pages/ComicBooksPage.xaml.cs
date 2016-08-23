@@ -16,7 +16,6 @@ namespace ZangSiSee.Pages
         protected async override void Initialize()
         {
             InitializeComponent();
-            Title = ViewModel.Comic.Title;
 
             await ViewModel.Refresh().ConfigureAwait(false);
         }

@@ -7,7 +7,7 @@
 - [ ] CacheImage 프로그레스바 최상단 위치
 - [x] Local database
 - [x] ImageButton
-- [ ] Binding ViewModel's Title
+- [x] Binding ViewModel's Title
 - [ ] Inject INavigator into BaseViewModel
 
 # Master - Detail 레이아웃

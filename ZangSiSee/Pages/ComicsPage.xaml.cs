@@ -13,7 +13,6 @@ namespace ZangSiSee.Pages
         protected async override void Initialize()
         {
             InitializeComponent();
-            Title = "만화 목록";
 
             await ViewModel.Refresh().ConfigureAwait(false);
         }

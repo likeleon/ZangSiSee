@@ -8,6 +8,12 @@ namespace ZangSiSee
 {
     public class BaseViewModel : BaseNotify
     {
+        public string Title
+        {
+            get { return _title; }
+            set { SetPropertyChanged(ref _title, value); }
+        }
+
         public bool IsBusy
         {
             get { return _isBusy; }
@@ -16,6 +22,7 @@ namespace ZangSiSee
 
         public CancellationToken CancellationToken => _cancellationTokenSource.Token;
 
+        string _title = string.Empty;
         bool _isBusy;
         CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 

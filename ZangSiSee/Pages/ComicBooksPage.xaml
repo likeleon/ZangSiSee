@@ -2,7 +2,8 @@
 <local:ComicBooksPageXaml xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                           x:Class="ZangSiSee.Pages.ComicBooksPage"
-                          xmlns:local="clr-namespace:ZangSiSee.Pages">
+                          xmlns:local="clr-namespace:ZangSiSee.Pages"
+                          Title="{Binding Comic.Title}">
   <ListView  x:Name="list"
              ItemsSource="{Binding Books}"
              IsRefreshing="{Binding IsBusy, Mode=OneWay}"
