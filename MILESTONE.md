@@ -7,6 +7,13 @@
 - [ ] CacheImage 프로그레스바 최상단 위치
 - [x] Local database
 - [x] ImageButton
+- [ ] Binding ViewModel's Title
+- [ ] Inject INavigator into BaseViewModel
+
+# Master - Detail 레이아웃
+- [x] MainPage는 MasterDetailPage
+- [ ] MenuPage 추가
+- [ ] MenuPage에서 메뉴 클릭시 Detail 페이지 변경
 
 # 북마크 탭
 - [ ] 북마크 리스트 보여줌

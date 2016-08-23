@@ -10,13 +10,11 @@ namespace ZangSiSee
 {
     public partial class App : Application
     {
-        internal NavigationPage NavigationPage { get; }
-
         public App()
         {
             InitializeComponent();
             MessagingCenter.Subscribe<BaseViewModel, Exception>(this, "ExceptionOccured", OnAppExceptionOccured);
-            MainPage = NavigationPage = new NavigationPage(new ComicsPage());
+            MainPage = new RootPage();
         }
 
         void OnAppExceptionOccured(BaseViewModel viewModel, Exception exception)
