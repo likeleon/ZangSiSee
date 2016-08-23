@@ -12,8 +12,8 @@
 
 # Master - Detail 레이아웃
 - [x] MainPage는 MasterDetailPage
-- [ ] MenuPage 추가
-- [ ] MenuPage에서 메뉴 클릭시 Detail 페이지 변경
+- [x] MenuPage 추가
+- [x] MenuPage에서 메뉴 클릭시 Detail 페이지 변경
 
 # 북마크 탭
 - [ ] 북마크 리스트 보여줌

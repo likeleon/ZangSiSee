@@ -5,6 +5,11 @@
     x:Class="ZangSiSee.App">
   <Application.Resources>
     <ResourceDictionary>
+      <Color x:Key="primary">#3F51B5</Color>
+      <Color x:Key="primaryDark">#303F9F</Color>
+      <Color x:Key="accent">#7C4DFF</Color>
+      <Color x:Key="textPrimary">#FFFFFF</Color>
+      
       <Color x:Key="asphaltPrimary">#365271</Color>
       <Color x:Key="asphaltLight">#889DB5</Color>
       <Color x:Key="asphaltDark">#1C2B39</Color>

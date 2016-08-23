@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:imageCircle="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
+             x:Class="ZangSiSee.Pages.MenuPage"
+             Title="{Binding Title}"
+             BackgroundColor="#F5F5F5">
+  <ListView SeparatorColor="Transparent"
+            Grid.ColumnSpan="3"
+            Grid.Row="4"
+            HasUnevenRows="true"
+            x:Name="listViewMenu">
+    <ListView.Header>
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="10"/>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="30"/>
+          <RowDefinition Height="80"/>
+          <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+        <BoxView Grid.ColumnSpan="3"
+                 Grid.RowSpan="4"
+                 BackgroundColor="{StaticResource primary}"/>
+        <imageCircle:CircleImage Grid.Column="1" Grid.Row="1"
+                                 BorderColor="White" BorderThickness="5"
+                                 HorizontalOptions="Start" VerticalOptions="End"
+                                 Source="icon.png"
+                                 WidthRequest="75" HeightRequest="75"/>
+      </Grid>
+    </ListView.Header>
+    <ListView.ItemTemplate>
+      <DataTemplate>
+        <ViewCell>
+          <StackLayout Padding="10,15" Orientation="Horizontal">
+            <Image Source="{Binding Icon}" />
+            <Label Text="{Binding Title}" FontSize="Large" VerticalOptions="Center"/>
+          </StackLayout>
+        </ViewCell>
+      </DataTemplate>
+    </ListView.ItemTemplate>
+  </ListView>
+</ContentPage>
