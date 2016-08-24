@@ -35,7 +35,7 @@ namespace ZangSiSee.ViewModels
         {
             Books.Clear();
             foreach (var book in DataManager.Instance.GetBooks(Comic).OrderBy(b => b.Order))
-                Books.Add(new BookViewModel() { Book = book });
+                Books.Add(new BookViewModel(book));
         }
     }
 }

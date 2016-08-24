@@ -55,6 +55,9 @@
     <Compile Include="Pages\BookImagesPage.xaml.cs">
       <DependentUpon>BookImagesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\BookmarksPage.xaml.cs">
+      <DependentUpon>BookmarksPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ComicBooksPage.xaml.cs">
       <DependentUpon>ComicBooksPage.xaml</DependentUpon>
     </Compile>
@@ -71,6 +74,8 @@
     <Compile Include="Services\DataManager.cs" />
     <Compile Include="Services\ZangSiSiService.cs" />
     <Compile Include="ViewModels\BookImagesViewModel.cs" />
+    <Compile Include="ViewModels\BookmarksViewModel.cs" />
+    <Compile Include="ViewModels\BookmarkViewModel.cs" />
     <Compile Include="ViewModels\BookViewModel.cs" />
     <Compile Include="ViewModels\ComicBooksViewModel.cs" />
     <Compile Include="ViewModels\ComicsViewModel.cs" />
@@ -159,6 +164,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\MenuPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\BookmarksPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

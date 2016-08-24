@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:BookmarksXaml xmlns="http://xamarin.com/schemas/2014/forms"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                     xmlns:pages="clr-namespace:ZangSiSee.Pages"
+                     x:Class="ZangSiSee.Pages.BookmarksPage"
+                     Icon="Transparent"
+                     Title="{Binding Title}">
+  <ListView HasUnevenRows="True"
+            SeparatorColor="{StaticResource grayPrimary}"
+            ItemsSource="{Binding Bookmarks}">
+    <ListView.ItemTemplate>
+      <DataTemplate>
+        <ViewCell>
+          <ViewCell.View>
+            <StackLayout Spacing="0" Padding="15">
+              <Label Text="{Binding Bookmark.BookTitle}" />
+              <Label Text="{Binding Bookmark.PageNumber}" Style="{StaticResource sub}" />
+            </StackLayout>
+          </ViewCell.View>
+        </ViewCell>
+      </DataTemplate>
+    </ListView.ItemTemplate>
+  </ListView>
+</pages:BookmarksXaml>

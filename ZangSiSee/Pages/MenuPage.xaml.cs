@@ -11,7 +11,7 @@ namespace ZangSiSee.Pages
         readonly HomeMenuItem[] _menuItems = new HomeMenuItem[]
         {
             new HomeMenuItem { Title = "만화 목록", MenuType = MenuType.Comics, Icon = "info.png" },
-            new HomeMenuItem { Title = "북마크", MenuType = MenuType.Bookmarks, Icon = "info.png" },
+            new HomeMenuItem { Title = "북마크", MenuType = MenuType.Bookmarks, Icon = "bookmark_black.png" },
             new HomeMenuItem { Title = "설정", MenuType = MenuType.Settings, Icon = "info.png" },
             new HomeMenuItem { Title = "정보", MenuType = MenuType.About, Icon = "info.png" }
         };

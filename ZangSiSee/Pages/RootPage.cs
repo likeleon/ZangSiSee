@@ -18,14 +18,15 @@ namespace ZangSiSee.Pages
 
         static NavigationPage CreatePage(MenuType menuType)
         {
-            switch (menuType)
-            {
-                case MenuType.Comics:
-                    return new NavigationPage(new ComicsPage());
+            Page root;
+            if (menuType == MenuType.Comics)
+                root = new ComicsPage();
+            else if (menuType == MenuType.Bookmarks)
+                root = new BookmarksPage();
+            else
+                root = new ContentPage() { Title = menuType.ToString() };
 
-                default:
-                    return new NavigationPage(new ContentPage() { Title = menuType.ToString() });
-            }
+            return new NavigationPage(root);
         }
 
         public void Navigate(MenuType menu)
