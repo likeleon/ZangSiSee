@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
+using ZangSiSee.Primitives;
 
 namespace ZangSiSee.Pages
 {
@@ -7,7 +7,7 @@ namespace ZangSiSee.Pages
     {
         static MenuType DefaultMenuType { get; } = MenuType.Comics;
 
-        readonly Dictionary<MenuType, NavigationPage> _pages = new Dictionary<MenuType, NavigationPage>();
+        readonly Cache<MenuType, NavigationPage> _pages = new Cache<MenuType, NavigationPage>(CreatePage);
 
         public RootPage()
         {
@@ -16,26 +16,21 @@ namespace ZangSiSee.Pages
             Navigate(DefaultMenuType);
         }
 
+        static NavigationPage CreatePage(MenuType menuType)
+        {
+            switch (menuType)
+            {
+                case MenuType.Comics:
+                    return new NavigationPage(new ComicsPage());
+
+                default:
+                    return new NavigationPage(new ContentPage() { Title = menuType.ToString() });
+            }
+        }
+
         public void Navigate(MenuType menu)
         {
-            NavigationPage page;
-            if (!_pages.TryGetValue(menu, out page))
-            {
-                switch (menu)
-                {
-                    case MenuType.Comics:
-                        page = new NavigationPage(new ComicsPage());
-                        _pages.Add(menu, page);
-                        break;
-
-                    default:
-                        page = new NavigationPage(new ContentPage() { Title = menu.ToString() });
-                        _pages.Add(menu, page);
-                        break;
-                }
-            }
-
-            Detail = page;
+            Detail = _pages[menu];
             IsPresented = false;
         }
     }

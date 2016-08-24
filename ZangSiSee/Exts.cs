@@ -44,5 +44,18 @@ namespace ZangSiSee
 
         public static EventHandler<T> Throttle<T>(this EventHandler<T> handler, TimeSpan dueTime) where T : EventArgs 
             => new ThrottledEventHandler<T>(handler, dueTime);
+
+        public static V GetOrAdd<K, V>(this Dictionary<K, V> d, K k) where V : new()
+        {
+            return GetOrAdd(d, k, _ => new V());
+        }
+
+        public static V GetOrAdd<K, V>(this Dictionary<K, V> d, K k, Func<K, V> createFn)
+        {
+            V ret;
+            if (!d.TryGetValue(k, out ret))
+                d.Add(k, ret = createFn(k));
+            return ret;
+        }
     }
 }
