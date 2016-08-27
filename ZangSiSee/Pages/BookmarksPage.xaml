@@ -13,10 +13,17 @@
       <DataTemplate>
         <ViewCell>
           <ViewCell.View>
-            <StackLayout Spacing="0" Padding="15">
-              <Label Text="{Binding Bookmark.BookTitle}" />
-              <Label Text="{Binding Bookmark.PageNumber, StringFormat='{}{0} 페이지'}" Style="{StaticResource sub}" />
-            </StackLayout>
+            <Grid Padding="15">
+              <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+              </Grid.RowDefinitions>
+              <StackLayout Spacing="10" Orientation="Horizontal">
+                <Label Text="{Binding Bookmark.BookTitle}" />
+                <Label Text="{Binding Bookmark.PageNumber, StringFormat='{}{0} 페이지'}" Style="{StaticResource sub}" />
+              </StackLayout>
+              <Label Grid.Row="1" Text="{Binding Bookmark.CreationTime, StringFormat='{}{0:f}'}" Style="{StaticResource sub}" />
+            </Grid>
           </ViewCell.View>
         </ViewCell>
       </DataTemplate>

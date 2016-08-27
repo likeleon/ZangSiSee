@@ -96,7 +96,12 @@ namespace ZangSiSee.Services
                 if (GetBookmarkInner(book, pageNumber) != null)
                     throw new InvalidOperationException("Bookmark(book:{}, page:{}) already exist!".F(book.Title, pageNumber));
 
-                var bookmark = new Bookmark() { BookTitle = book.Title, PageNumber = pageNumber };
+                var bookmark = new Bookmark()
+                {
+                    BookTitle = book.Title,
+                    PageNumber = pageNumber,
+                    CreationTime = DateTime.Now
+                };
                 _database.Insert(bookmark);
                 return bookmark;
             }

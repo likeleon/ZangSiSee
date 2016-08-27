@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using System;
 
 namespace ZangSiSee.Models
 {
@@ -8,5 +9,6 @@ namespace ZangSiSee.Models
         public int Id { get; set; }
         public string BookTitle { get; set; }
         public int PageNumber { get; set; }
+        public DateTime CreationTime { get; set;}
     }
 }
