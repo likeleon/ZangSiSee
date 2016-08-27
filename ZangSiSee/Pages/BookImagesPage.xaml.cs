@@ -8,10 +8,12 @@ namespace ZangSiSee.Pages
     public partial class BookImagesPage : BookImagesPageXaml
     {
         EventHandler<ValueChangedEventArgs> ShowPageWithThrottle;
+        int _startingPage;
 
-        public BookImagesPage(Book book)
+        public BookImagesPage(Book book, int startingPage = 0)
         {
             ViewModel.Book = book;
+            _startingPage = startingPage;
             Initialize();
         }
 
@@ -35,7 +37,7 @@ namespace ZangSiSee.Pages
             }, TimeSpan.FromMilliseconds(500));
 
             ViewModel.IsFullScreen = true;
-            await ViewModel.GetImages().ConfigureAwait(false);
+            await ViewModel.Initialize(_startingPage).ConfigureAwait(false);
         }
 
         protected override void OnAppearing()

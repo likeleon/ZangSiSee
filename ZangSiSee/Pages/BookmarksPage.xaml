@@ -5,7 +5,8 @@
                      x:Class="ZangSiSee.Pages.BookmarksPage"
                      Icon="Transparent"
                      Title="{Binding Title}">
-  <ListView HasUnevenRows="True"
+  <ListView x:Name="list"
+            HasUnevenRows="True"
             SeparatorColor="{StaticResource grayPrimary}"
             ItemsSource="{Binding Bookmarks}">
     <ListView.ItemTemplate>
@@ -14,7 +15,7 @@
           <ViewCell.View>
             <StackLayout Spacing="0" Padding="15">
               <Label Text="{Binding Bookmark.BookTitle}" />
-              <Label Text="{Binding Bookmark.PageNumber}" Style="{StaticResource sub}" />
+              <Label Text="{Binding Bookmark.PageNumber, StringFormat='{}{0} 페이지'}" Style="{StaticResource sub}" />
             </StackLayout>
           </ViewCell.View>
         </ViewCell>

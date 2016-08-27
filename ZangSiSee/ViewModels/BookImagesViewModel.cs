@@ -71,12 +71,29 @@ namespace ZangSiSee.ViewModels
             SliderPageNumber = _pageNumber;
         }
 
-        public async Task GetImages()
+        public async Task Initialize(int startingPage)
+        {
+            await ShowPage(startingPage, true);
+        }
+
+        public async Task ShowPage(int pageNumber, bool force = false)
         {
             if (!await EnsureBookImageUrisGot())
                 return;
 
-            await ShowPage(PageNumber, true).ConfigureAwait(false);
+            int clampedPage = pageNumber.Clamp(1, MaxPageNumber);
+            if (!force && PageNumber == clampedPage)
+                return;
+
+            PageNumber = clampedPage;
+            Image = GetImageSource(Book.ImageUris[PageNumber - 1]);
+
+            var urisToCache = Book.ImageUris
+                .Skip(PageNumber)
+                .Take(3)
+                .Where(uri => !_imageCaches.ContainsKey(uri)).ToArray();
+            if (urisToCache.Length > 0)
+                await RunSafe(CacheImages(urisToCache)).ConfigureAwait(false);
         }
 
         async Task<bool> EnsureBookImageUrisGot()
@@ -99,26 +116,6 @@ namespace ZangSiSee.ViewModels
                     return false;
                 }
             }
-        }
-
-        public async Task ShowPage(int pageNumber, bool force = false)
-        {
-            if (Book.ImageUris.IsNullOrEmpty())
-                return;
-
-            int clampedPage = pageNumber.Clamp(1, MaxPageNumber);
-            if (!force && PageNumber == clampedPage)
-                return;
-
-            PageNumber = clampedPage;
-            Image = GetImageSource(Book.ImageUris[PageNumber - 1]);
-
-            var urisToCache = Book.ImageUris
-                .Skip(PageNumber)
-                .Take(3)
-                .Where(uri => !_imageCaches.ContainsKey(uri)).ToArray();
-            if (urisToCache.Length > 0)
-                await RunSafe(CacheImages(urisToCache)).ConfigureAwait(false);
         }
 
         ImageSource GetImageSource(Uri uri)

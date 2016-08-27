@@ -9,6 +9,7 @@
 - [x] ImageButton
 - [x] Binding ViewModel's Title
 - [ ] Inject INavigator into BaseViewModel
+- [ ] BulkObservableCollection
 
 # Master - Detail 레이아웃
 - [x] MainPage는 MasterDetailPage
@@ -16,12 +17,12 @@
 - [x] MenuPage에서 메뉴 클릭시 Detail 페이지 변경
 
 # 북마크 탭
-- [ ] 북마크 리스트 보여줌
-- [ ] 북마크 클릭시 해당 페이지로 이동
+- [x] 북마크 리스트 보여줌
+- [x] 북마크 클릭시 해당 페이지로 이동
+- [ ] 북마크 추가된 날짜 보여주기
 
 # 페이지 뷰 하단 UI
-- [ ] Go To
-- [ ] Bookmark
+- [x] Bookmark
 - [ ] Change orientation
 - [ ] Toggle split view
-- [ ] Full Screen
+- [x] Full Screen

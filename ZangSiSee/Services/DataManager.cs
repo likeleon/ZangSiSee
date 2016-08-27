@@ -32,10 +32,10 @@ namespace ZangSiSee.Services
                 return _database.Table<Comic>().OrderBy(c => c.Title);
         }
 
-        public Comic GetComic(string id)
+        public Comic GetComic(string title)
         {
             lock (_lock)
-                return _database.Find<Comic>(id);
+                return _database.Find<Comic>(title);
         }
 
         public void ReplaceAllComics(IEnumerable<Comic> comics)
@@ -52,6 +52,12 @@ namespace ZangSiSee.Services
         {
             lock (_lock)
                 return _database.Table<Book>().Where(b => b.ComicTitle == comic.Title);
+        }
+
+        public Book GetBook(string title)
+        {
+            lock (_lock)
+                return _database.Find<Book>(title);
         }
 
         public void ReplaceBooks(Comic comic, IEnumerable<Book> books)
