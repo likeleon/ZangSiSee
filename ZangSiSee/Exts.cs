@@ -57,5 +57,7 @@ namespace ZangSiSee
                 d.Add(k, ret = createFn(k));
             return ret;
         }
+
+        public static string JoinWith(this IEnumerable<string> values, string separator) => string.Join(separator, values);
     }
 }

@@ -60,7 +60,6 @@ namespace ZangSiSee.ViewModels
         public ICommand ExitFullScreenCommand => new Command(_ => IsFullScreen = false);
 
         readonly ConcurrentDictionary<Uri, byte[]> _imageCaches = new ConcurrentDictionary<Uri, byte[]>();
-        readonly HttpClient _httpClient = new HttpClient();
         ImageSource _image;
         int _pageNumber = 1; // starts from 1
         int _slidingPageNumber;
@@ -141,8 +140,11 @@ namespace ZangSiSee.ViewModels
 
                     try
                     {
-                        var bytes = await _httpClient.GetByteArrayAsync(uri).ConfigureAwait(false);
-                        _imageCaches.TryUpdate(uri, bytes, null);
+                        using (var httpClient = new HttpClient())
+                        {
+                            var bytes = await  httpClient.GetByteArrayAsync(uri).ConfigureAwait(false);
+                            _imageCaches.TryUpdate(uri, bytes, null);
+                        }
                     }
                     catch (Exception ex)
                     {
