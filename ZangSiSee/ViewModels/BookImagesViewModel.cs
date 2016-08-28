@@ -137,14 +137,9 @@ namespace ZangSiSee.ViewModels
                 {
                     if (!_imageCaches.TryAdd(uri, null))
                         continue;
-
                     try
                     {
-                        using (var httpClient = new HttpClient())
-                        {
-                            var bytes = await  httpClient.GetByteArrayAsync(uri).ConfigureAwait(false);
-                            _imageCaches.TryUpdate(uri, bytes, null);
-                        }
+                        _imageCaches.TryUpdate(uri, await uri.DownloadAsBytes(), null);
                     }
                     catch (Exception ex)
                     {

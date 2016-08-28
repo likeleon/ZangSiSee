@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using ZangSiSee.Models;
 
 namespace ZangSiSee.Services
 {
@@ -17,7 +18,7 @@ namespace ZangSiSee.Services
 
         static readonly Lazy<DaumApi> _instance = Exts.Lazy(() => new DaumApi());
 
-        public async Task<DaumBook> SearchBook(string bookTitle, int volume)
+        public async Task<BookInfo> GetBookInfo(string bookTitle, int volume)
         {
             CheckApiKeySet();
 
@@ -26,21 +27,14 @@ namespace ZangSiSee.Services
             if (item == null)
                 return null;
 
-            return new DaumBook()
+            return new BookInfo()
             {
-                Title = GetResponseField(item, "title"),
-                Link = new Uri(GetResponseField(item, "link")),
-                SmallCover = new Uri(GetResponseField(item, "cover_s_url")),
-                LargeCover = new Uri(GetResponseField(item, "cover_l_url")),
+                BookTitle = bookTitle,
+                CoverImage = await new Uri(GetResponseField(item, "cover_l_url")).DownloadAsBytes(),
                 Description = GetResponseField(item, "description"),
                 Author = GetResponseField(item, "author"),
                 Translator = GetResponseField(item, "translator")
             };
-        }
-
-        string GetResponseField(XElement e, string childName)
-        {
-            return Uri.UnescapeDataString(e.Element(childName).Value);
         }
 
         string MakeUriSearching(string bookTitle, int volume)
@@ -75,6 +69,11 @@ namespace ZangSiSee.Services
         {
             if (ApiKey == null)
                 throw new InvalidOperationException("{0} should be set".F(nameof(ApiKey)));
+        }
+
+        string GetResponseField(XElement e, string childName)
+        {
+            return Uri.UnescapeDataString(e.Element(childName).Value);
         }
     }
 

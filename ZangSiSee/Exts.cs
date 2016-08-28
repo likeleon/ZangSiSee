@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using ZangSiSee.Interfaces;
 using ZangSiSee.Primitives;
@@ -59,5 +61,11 @@ namespace ZangSiSee
         }
 
         public static string JoinWith(this IEnumerable<string> values, string separator) => string.Join(separator, values);
+
+        public static async Task<byte[]> DownloadAsBytes(this Uri uri)
+        {
+            using (var httpClient = new HttpClient())
+                return await httpClient.GetByteArrayAsync(uri).ConfigureAwait(false);
+        }
     }
 }
