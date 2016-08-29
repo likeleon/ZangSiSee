@@ -67,5 +67,16 @@ namespace ZangSiSee
             using (var httpClient = new HttpClient())
                 return await httpClient.GetByteArrayAsync(uri).ConfigureAwait(false);
         }
+
+        public static async void Forget(this Task task)
+        {
+            try
+            {
+                await task.ConfigureAwait(false);
+            }
+            catch
+            {
+            }
+        }
     }
 }

@@ -11,9 +11,25 @@
     <DataTemplate>
       <ViewCell>
         <ViewCell.View>
-          <StackLayout Spacing="0" Padding="15">
-            <Label Text="{Binding Comic.Title}" />
-          </StackLayout>
+          <Grid Padding="15">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Image Grid.RowSpan="2" 
+                   Source="{Binding Info.CoverImage}"
+                   Aspect="AspectFill"
+                   WidthRequest="55"
+                   HeightRequest="80"/>
+            <Label Grid.Column="1" 
+                   Text="{Binding Comic.Title}" />
+            <Label Grid.Row="1" Grid.Column="1" 
+                   Text="{Binding Info.Description}" Style="{StaticResource sub}" />
+          </Grid>
         </ViewCell.View>
       </ViewCell>
     </DataTemplate>

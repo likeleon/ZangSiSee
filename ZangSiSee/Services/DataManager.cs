@@ -23,9 +23,11 @@ namespace ZangSiSee.Services
             _database = DependencyService.Get<ISQLite>().GetConnection(_localDbName);
             _database.CreateTable<Comic>();
             _database.CreateTable<Book>();
+            _database.CreateTable<BookInfo>();
             _database.CreateTable<Bookmark>();
         }
 
+        #region Comic
         public IEnumerable<Comic> AllComics()
         {
             lock (_lock)
@@ -47,7 +49,9 @@ namespace ZangSiSee.Services
                 _database.InsertAll(comics);
             }
         }
+        #endregion
 
+        #region Book
         public IEnumerable<Book> GetBooks(Comic comic)
         {
             lock (_lock)
@@ -71,7 +75,29 @@ namespace ZangSiSee.Services
                 _database.InsertAll(books);
             }
         }
+        #endregion
 
+        #region BookInfo
+        public IEnumerable<BookInfo> GetBookInfos(Comic comic)
+        {
+            lock (_lock)
+                return _database.Table<BookInfo>().Where(b => b.ComicTitle == comic.Title);
+        }
+
+        public BookInfo GetBookInfo(Book book)
+        {
+            lock (_lock)
+                return _database.Find<BookInfo>(book.Title);
+        }
+
+        public void InsertOrReplace(BookInfo bookInfo)
+        {
+            lock (_lock)
+                _database.InsertOrReplace(bookInfo);
+        }
+        #endregion
+
+        #region Bookmark
         public IEnumerable<Bookmark> AllBookmarks()
         {
             lock (_lock)
@@ -112,5 +138,6 @@ namespace ZangSiSee.Services
             lock (_lock)
                 return _database.Table<Bookmark>().Delete(m => m.BookTitle == book.Title && m.PageNumber == pageNumber) > 0;
         }
+        #endregion
     }
 }

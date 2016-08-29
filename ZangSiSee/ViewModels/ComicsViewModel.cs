@@ -1,7 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using ZangSiSee.Models;
 using ZangSiSee.Services;
 
 namespace ZangSiSee.ViewModels
@@ -16,7 +20,7 @@ namespace ZangSiSee.ViewModels
             set
             {
                 if (SetPropertyChanged(ref _searchText, value))
-                    LocalRefresh();
+                    LocalRefresh().Forget();
             }
         }
 
@@ -31,7 +35,7 @@ namespace ZangSiSee.ViewModels
 
         public async Task Refresh()
         {
-            LocalRefresh();
+            await LocalRefresh();
             if (Comics.Count <= 0)
                 await RemoteRefresh();
         }
@@ -41,19 +45,41 @@ namespace ZangSiSee.ViewModels
             using (new Busy(this))
             {
                 await ExceptionSafe(ZangSiSiService.Instance.GetAllComics());
-                LocalRefresh();
+                await LocalRefresh();
             }
         }
 
-        void LocalRefresh()
+        async Task LocalRefresh()
         {
             Comics.Clear();
+
+            var comicsToUpdate = new List<Comic>();
             foreach (var comic in DataManager.Instance.AllComics())
             {
                 if (!SearchText.IsNullOrEmpty() && !comic.Title.Contains(SearchText))
                     continue;
 
-                Comics.Add(new ComicViewModel() { Comic = comic });
+                var info = DataManager.Instance.GetBookInfos(comic).FirstOrDefault();
+                if (info == null)
+                    comicsToUpdate.Add(comic);
+
+                Comics.Add(new ComicViewModel(comic) { Info = info });
+            }
+
+            foreach (var comic in comicsToUpdate)
+            {
+                try
+                {
+                    var info = await DaumApi.Instance.GetBookInfo(comic, 1);
+                    DataManager.Instance.InsertOrReplace(info);
+                    var vm = Comics.FirstOrDefault(c => c.Comic == comic);
+                    if (vm != null)
+                        vm.Info = info;
+                }
+                catch (Exception e)
+                {
+                    HandleException(e);
+                }
             }
         }
     }

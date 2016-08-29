@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using System;
 
 namespace ZangSiSee.Models
 {
@@ -6,7 +7,8 @@ namespace ZangSiSee.Models
     {
         [PrimaryKey]
         public string BookTitle { get; set; }
-        public byte[] CoverImage { get; set; }
+        public string ComicTitle { get; set; }
+        public string CoverImage { get; set; }
         public string Description { get; set; }
         public string Author { get; set; }
         public string Translator { get; set; }
