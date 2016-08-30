@@ -11,8 +11,9 @@
     <DataTemplate>
       <ViewCell>
         <ViewCell.View>
-          <Grid Padding="15">
+          <Grid Padding="5">
             <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
               <ColumnDefinition Width="Auto" />
               <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
@@ -22,12 +23,12 @@
             </Grid.RowDefinitions>
             <Image Grid.RowSpan="2" 
                    Source="{Binding Info.CoverImage}"
-                   Aspect="AspectFill"
-                   WidthRequest="55"
-                   HeightRequest="80"/>
-            <Label Grid.Column="1" 
-                   Text="{Binding Comic.Title}" />
-            <Label Grid.Row="1" Grid.Column="1" 
+                   Aspect="AspectFit"
+                   WidthRequest="75"
+                   HeightRequest="100"/>
+            <Label Grid.Column="1" Margin="7" Text="{Binding Comic.Title}" />
+            <Label Grid.Column="2" Margin="7" Text="{Binding Info.Author}" Style="{StaticResource sub}" />
+            <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="5"
                    Text="{Binding Info.Description}" Style="{StaticResource sub}" />
           </Grid>
         </ViewCell.View>

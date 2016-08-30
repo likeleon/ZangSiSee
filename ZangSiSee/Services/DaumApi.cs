@@ -67,7 +67,7 @@ namespace ZangSiSee.Services
                 if (!match.Success)
                     return null;
 
-                return int.Parse(match.Groups[0].Value);
+                return int.Parse(match.Groups[1].Value);
             }
             catch
             {

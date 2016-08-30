@@ -15,6 +15,6 @@
 - [x] Full Screen
 
 # ComicInfoProvider
-- [ ] Naver Open API로 만화별 대표 이미지, 설명, 작가 정보를 얻는다
-- [ ] Naver Open API로 권별 대표 이미지를 얻는다
-- [ ] 만화, 권을 표현할 때 얻은 정보를 노출한다
+- [x] Daum Open API로 만화별 대표 이미지, 설명, 작가 정보를 얻는다
+- [x] Daum Open API로 권별 대표 이미지를 얻는다
+- [x] 만화, 권을 표현할 때 얻은 정보를 노출한다

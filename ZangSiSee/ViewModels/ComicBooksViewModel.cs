@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -17,9 +19,9 @@ namespace ZangSiSee.ViewModels
 
         public async Task Refresh()
         {
-            LocalRefresh();
+            await LocalRefresh();
             if (Books.Count <= 0)
-                await RemoteRefresh();
+                await RemoteRefresh().ConfigureAwait(false);
         }
 
         async Task RemoteRefresh()
@@ -27,15 +29,41 @@ namespace ZangSiSee.ViewModels
             using (new Busy(this))
             {
                 await ExceptionSafe(ZangSiSiService.Instance.GetBooks(Comic));
-                LocalRefresh();
+                await LocalRefresh().ConfigureAwait(false);
             }
         }
 
-        void LocalRefresh()
+        async Task LocalRefresh()
         {
             Books.Clear();
+
+            var booksToUpdate = new List<Book>();
             foreach (var book in DataManager.Instance.GetBooks(Comic).OrderBy(b => b.Order))
-                Books.Add(new BookViewModel(book));
+            {
+                var info = DataManager.Instance.GetBookInfo(book);
+                if (info == null)
+                    booksToUpdate.Add(book);
+
+                Books.Add(new BookViewModel(book) { Info = info });
+            }
+
+            foreach (var book in booksToUpdate)
+            {
+                try
+                {
+                    var info = await DaumApi.Instance.GetBookInfo(book) ?? DefaultInfo(book);
+                    DataManager.Instance.InsertOrReplace(info);
+                    var vm = Books.FirstOrDefault(b => b.Book == book);
+                    if (vm != null)
+                        vm.Info = info;
+                }
+                catch (Exception e)
+                {
+                    HandleException(e);
+                }
+            }
         }
+
+        BookInfo DefaultInfo(Book book) => new BookInfo() { BookTitle = book.Title, ComicTitle = book.ComicTitle };
     }
 }

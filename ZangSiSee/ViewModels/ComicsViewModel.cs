@@ -70,7 +70,7 @@ namespace ZangSiSee.ViewModels
             {
                 try
                 {
-                    var info = await DaumApi.Instance.GetBookInfo(comic, 1);
+                    var info = await DaumApi.Instance.GetBookInfo(comic, 1) ?? DefaultInfo(comic);
                     DataManager.Instance.InsertOrReplace(info);
                     var vm = Comics.FirstOrDefault(c => c.Comic == comic);
                     if (vm != null)
@@ -82,5 +82,7 @@ namespace ZangSiSee.ViewModels
                 }
             }
         }
+
+        BookInfo DefaultInfo(Comic comic) => new BookInfo() { BookTitle = comic.Title, ComicTitle = comic.Title };
     }
 }
