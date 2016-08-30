@@ -55,6 +55,12 @@
         <Setter Property="BackgroundColor" Value="{StaticResource grayPrimary}" />
       </Style>
       <Style TargetType="Button" BasedOn="{StaticResource buttonStyle}" />
+
+      <Style x:Key="coverImageStyle" TargetType="Image">
+        <Setter Property="Aspect" Value="AspectFit" />
+        <Setter Property="WidthRequest" Value="75" />
+        <Setter Property="HeightRequest" Value="100" />
+      </Style>
     </ResourceDictionary>
   </Application.Resources>
 </Application>

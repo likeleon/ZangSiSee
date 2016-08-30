@@ -21,15 +21,14 @@
               <RowDefinition Height="Auto" />
               <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Image Grid.RowSpan="2" 
-                   Source="{Binding Info.CoverImage}"
-                   Aspect="AspectFit"
-                   WidthRequest="75"
-                   HeightRequest="100"/>
-            <Label Grid.Column="1" Margin="7" Text="{Binding Comic.Title}" />
-            <Label Grid.Column="2" Margin="7" Text="{Binding Info.Author}" Style="{StaticResource sub}" />
-            <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="5"
-                   Text="{Binding Info.Description}" Style="{StaticResource sub}" />
+            <Image Grid.RowSpan="2" Style="{StaticResource coverImageStyle}"
+                   Source="{Binding Info.CoverImage}" />
+            <Label Grid.Column="1" Margin="7" FontSize="Large"
+                   Text="{Binding Comic.Title}" />
+            <Label Grid.Column="2" Margin="7" Style="{StaticResource sub}" VerticalTextAlignment="Center" 
+                   Text="{Binding Info.Author}" />
+            <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="5,0,5,5" Style="{StaticResource sub}"
+                   Text="{Binding Info.Description}" />
           </Grid>
         </ViewCell.View>
       </ViewCell>
