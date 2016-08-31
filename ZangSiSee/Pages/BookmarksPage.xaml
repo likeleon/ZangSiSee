@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <pages:BookmarksXaml xmlns="http://xamarin.com/schemas/2014/forms"
                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                     xmlns:converters="clr-namespace:ZangSiSee.Converters"
                      xmlns:pages="clr-namespace:ZangSiSee.Pages"
                      x:Class="ZangSiSee.Pages.BookmarksPage"
                      Icon="Transparent"
@@ -24,7 +25,7 @@
                 <RowDefinition />
               </Grid.RowDefinitions>
               <Image Grid.RowSpan="2" Style="{StaticResource coverImageStyle}"
-                     Source="{Binding BookInfo.CoverImage}" />
+                     Source="{Binding BookInfo.CoverImage, Converter={x:Static converters:ByteArrayToImageSourceConverter.Instance}}" />
               <Label Grid.Column="1" Margin="7" FontSize="Large"
                      Text="{Binding Bookmark.BookTitle}" />
               <Label Grid.Column="2" Margin="7" Style="{StaticResource sub}" VerticalTextAlignment="Center"

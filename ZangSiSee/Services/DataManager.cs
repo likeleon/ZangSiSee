@@ -95,6 +95,15 @@ namespace ZangSiSee.Services
             lock (_lock)
                 _database.InsertOrReplace(bookInfo);
         }
+
+        public void ClearBookInfos()
+        {
+            lock (_lock)
+            {
+                _database.DropTable<BookInfo>();
+                _database.CreateTable<BookInfo>();
+            }
+        }
         #endregion
 
         #region Bookmark

@@ -42,6 +42,7 @@
     <Compile Include="BaseNotify.cs" />
     <Compile Include="BaseViewModel.cs" />
     <Compile Include="Controls\ImageButton.cs" />
+    <Compile Include="Converters\ByteArrayToImageSourceConverter.cs" />
     <Compile Include="Converters\RoundToIntConverter.cs" />
     <Compile Include="Exts.cs" />
     <Compile Include="Interfaces\ISQLite.cs" />

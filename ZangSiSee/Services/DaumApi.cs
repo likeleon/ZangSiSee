@@ -22,18 +22,18 @@ namespace ZangSiSee.Services
         public async Task<BookInfo> GetBookInfo(Comic comic, int volume)
         {
             CheckApiKeySet();
-            var keyword = SearchVolumeKeyword(comic.Title, volume);
+            var keyword = MakeSearchKeyword(comic.Title, volume);
             return await GetBookInfoInternal(keyword, comic.Title);
         }
 
         public async Task<BookInfo> GetBookInfo(Book book)
         {
             CheckApiKeySet();
-            var keyword = SearchVolumeKeyword(book.ComicTitle, GuessVolume(book.Title)) ?? book.Title;
+            var keyword = MakeSearchKeyword(book.ComicTitle, GuessVolume(book.Title)) ?? book.Title;
             return await GetBookInfoInternal(keyword, book.ComicTitle, book);
         }
 
-        string SearchVolumeKeyword(string comicTitle, int? volume)
+        string MakeSearchKeyword(string comicTitle, int? volume)
         {
             if (volume == null)
                 return null;
@@ -44,19 +44,47 @@ namespace ZangSiSee.Services
         async Task<BookInfo> GetBookInfoInternal(string searchKeyword, string comicTitle, Book book = null)
         {
             var response = await GetAsync(MakeUriSearching(searchKeyword));
-            var item = response.Element("item");
-            if (item == null)
+            var items = response.Elements("item");
+            if (items.IsNullOrEmpty())
                 return null;
 
+            var item = await FirstItemContainsCoverImage(items);
             return new BookInfo()
             {
-                BookTitle = book?.Title ?? GetResponseField(item, "title"),
+                BookTitle = book?.Title ?? GetResponseField(item.Item1, "title"),
                 ComicTitle = comicTitle,
-                CoverImage = GetResponseField(item, "cover_l_url") ?? GetResponseField(item, "cover_s_url"),
-                Description = GetResponseField(item, "description"),
-                Author = GetResponseField(item, "author"),
-                Translator = GetResponseField(item, "translator")
+                CoverImage = item.Item2,
+                Description = GetResponseField(item.Item1, "description"),
+                Author = GetResponseField(item.Item1, "author"),
+                Translator = GetResponseField(item.Item1, "translator")
             };
+        }
+
+        async Task<Tuple<XElement, byte[]>> FirstItemContainsCoverImage(IEnumerable<XElement> items)
+        {
+            foreach (var item in items)
+            {
+                var coverImage = await DownloadCoverImage(item);
+                if (coverImage != null)
+                    return Tuple.Create(item, coverImage);
+            }
+            return Tuple.Create<XElement, byte[]>(items.First(), null);
+        }
+
+        async Task<byte[]> DownloadCoverImage(XElement e)
+        {
+            try
+            {
+                var imageUrl = GetResponseField(e, "cover_l_url") ?? GetResponseField(e, "cover_s_url");
+                if (imageUrl.IsNullOrEmpty())
+                    return null;
+
+                return await new Uri(imageUrl).DownloadAsBytes();
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         int? GuessVolume(string bookTitle)
@@ -81,7 +109,7 @@ namespace ZangSiSee.Services
             {
                 { "apikey", ApiKey },
                 { "q", keyword },
-                { "result", "1" },
+                { "result", "20" },
                 { "sort", "accu" },
                 { "searchType", "title" },
                 { "output", "xml" }

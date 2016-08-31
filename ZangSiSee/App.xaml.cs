@@ -15,6 +15,7 @@ namespace ZangSiSee
         {
             InitializeComponent();
             DaumApi.Instance.ApiKey = "829a1577c965659dff4f4e7e7b57fd96";
+            DataManager.Instance.ClearBookInfos();
             MessagingCenter.Subscribe<BaseViewModel, Exception>(this, "ExceptionOccured", OnAppExceptionOccured);
             MainPage = new RootPage();
         }
