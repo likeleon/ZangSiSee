@@ -13,11 +13,6 @@ namespace ZangSiSee
         {
             BindingContext = ViewModel;
         }
-
-        ~BaseContentPage()
-        {
-            BindingContext = null;
-        }
     }
 
     public class MainBaseContentPage : ContentPage

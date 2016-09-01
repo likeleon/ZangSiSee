@@ -65,8 +65,14 @@ namespace ZangSiSee.Services
             if (element == null)
                 yield break;
 
+            var elems = element.QuerySelectorAll("a.tx-link");
+            if (elems.IsNullOrEmpty())
+                elems = element.QuerySelectorAll("a");
+            if (elems.IsNullOrEmpty())
+                yield break;
+
             int order = 0;
-            foreach (var a in element.QuerySelectorAll("a"))
+            foreach (var a in elems)
             {
                 yield return new Book()
                 {
@@ -81,8 +87,11 @@ namespace ZangSiSee.Services
         public async Task<Uri[]> GetImages(Book book)
         {
             var document = await GetDocument(book.Url);
-            return document.QuerySelector("span.contents").QuerySelectorAll("img")
-                .Select(img => new Uri(img.GetAttribute("src"))).ToArray();
+            var x = document.QuerySelector("span.contents");
+            if (x == null)
+                throw new Exception("Nothing found with selector 'span.contents'");
+
+            return x.QuerySelectorAll("img").Select(img => new Uri(img.GetAttribute("src"))).ToArray();
         }
     }
 }

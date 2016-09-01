@@ -60,31 +60,6 @@ namespace ZangSiSee
                 HandleException(exception, notifyOnError);
         }
 
-        public async Task ExceptionSafe(Task task)
-        {
-            try
-            {
-                await task;
-            }
-            catch (Exception e)
-            {
-                HandleException(e);
-            }
-        }
-
-        public async Task<T> ExceptionSafe<T>(Task<T> task)
-        {
-            try
-            {
-                return await task;
-            }
-            catch (Exception e)
-            {
-                HandleException(e);
-                return default(T);
-            }
-        }
-
         public void HandleException(Exception exception, bool notify = true)
         {
             Debug.WriteLine(exception);

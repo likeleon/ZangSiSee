@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using ZangSiSee.Interfaces;
 using ZangSiSee.Models;
 using ZangSiSee.Services;
 
@@ -44,8 +45,16 @@ namespace ZangSiSee.ViewModels
         {
             using (new Busy(this))
             {
-                await ExceptionSafe(ZangSiSiService.Instance.GetAllComics());
-                await LocalRefresh();
+                try
+                {
+                    await ZangSiSiService.Instance.GetAllComics();
+                    await LocalRefresh();
+                }
+                catch (Exception e)
+                {
+                    "만화 목록을 가져오지 못했습니다.".ToToast(ToastNotificationType.Warning);
+                    HandleException(e, false);
+                }
             }
         }
 
@@ -78,7 +87,7 @@ namespace ZangSiSee.ViewModels
                 }
                 catch (Exception e)
                 {
-                    HandleException(e);
+                    HandleException(e, false);
                 }
             }
         }

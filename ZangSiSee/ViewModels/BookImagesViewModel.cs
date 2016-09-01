@@ -110,8 +110,8 @@ namespace ZangSiSee.ViewModels
                 }
                 catch (Exception e)
                 {
-                    e.Message.ToToast(ToastNotificationType.Warning, "이미지 리스트 획득 실패");
-                    HandleException(e);
+                    "이미지 목록을 가져오지 못했습니다.".ToToast(ToastNotificationType.Warning);
+                    HandleException(e, false);
                     return false;
                 }
             }
@@ -143,7 +143,7 @@ namespace ZangSiSee.ViewModels
                     }
                     catch (Exception ex)
                     {
-                        ex.Message.ToToast(ToastNotificationType.Warning, "이미지 가져오기 실패");
+                        HandleException(ex, false);
                         byte[] bytes;
                         _imageCaches.TryRemove(uri, out bytes);
                     }
@@ -155,19 +155,19 @@ namespace ZangSiSee.ViewModels
         {
             if (DataManager.Instance.GetBookmark(Book, PageNumber) != null)
             {
-                "이미 북마크되어 있습니다".ToToast(ToastNotificationType.Info, "북마크");
+                "이미 북마크되어 있습니다.".ToToast(ToastNotificationType.Info, "북마크");
                 return;
             }
 
             try
             {
                 DataManager.Instance.AddBookmark(Book, PageNumber);
-                "북마크 추가".ToToast(ToastNotificationType.Success, "북마크");
+                "북마크가 추가되었습니다.".ToToast(ToastNotificationType.Success, "북마크");
             }
             catch (Exception e)
             {
-                ("북마크 실패: " + e.Message).ToToast(ToastNotificationType.Error, "북마크");
-                HandleException(e);
+                ("북마크를 추가하지 못했습니다. " + e.Message).ToToast(ToastNotificationType.Error, "북마크");
+                HandleException(e, false);
             }
         }
     }
